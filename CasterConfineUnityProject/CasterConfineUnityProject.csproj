@@ -80,6 +80,8 @@
   <ItemGroup>
     <Compile Include="Assets\GameLogic.cs" />
     <Compile Include="Assets\PlayerMovement.cs" />
+    <Compile Include="Assets\RandomCode.cs" />
+    <Compile Include="Assets\SelectObject.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

@@ -79,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\GameLogic.cs" />
+    <Compile Include="Assets\MainMenu.cs" />
     <Compile Include="Assets\PlayerMovement.cs" />
     <Compile Include="Assets\RandomCode.cs" />
     <Compile Include="Assets\SelectObject.cs" />

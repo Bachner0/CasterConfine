@@ -28,6 +28,7 @@ public class SelectObject : MonoBehaviour {
                 Debug.Log("We hit " + hit.collider.name + " " + hit.point);
                 //(whatever is in here will be executed)
 
+                // check to see if we hit an interactable
                 //stop focusing any objects and focus on this one, maybe throw a graphic up
 
 

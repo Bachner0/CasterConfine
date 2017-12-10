@@ -1,7 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2017
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CasterConfineUnityProject.Plugins", "CasterConfineUnityProject.Plugins.csproj", "{936468FA-4310-5A0D-28D4-181D6F82793D}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CasterConfineUnityProject", "CasterConfineUnityProject.csproj", "{C9A96660-4099-583F-DDD3-1C77464BD724}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CasterConfineUnityProject.Editor", "CasterConfineUnityProject.Editor.csproj", "{00DB1545-E256-171A-F4DA-8BF49F13F16D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +13,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{936468FA-4310-5A0D-28D4-181D6F82793D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{936468FA-4310-5A0D-28D4-181D6F82793D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{936468FA-4310-5A0D-28D4-181D6F82793D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{936468FA-4310-5A0D-28D4-181D6F82793D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C9A96660-4099-583F-DDD3-1C77464BD724}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C9A96660-4099-583F-DDD3-1C77464BD724}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9A96660-4099-583F-DDD3-1C77464BD724}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9A96660-4099-583F-DDD3-1C77464BD724}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00DB1545-E256-171A-F4DA-8BF49F13F16D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00DB1545-E256-171A-F4DA-8BF49F13F16D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00DB1545-E256-171A-F4DA-8BF49F13F16D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00DB1545-E256-171A-F4DA-8BF49F13F16D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

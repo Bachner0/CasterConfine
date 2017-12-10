@@ -10,6 +10,11 @@ public class MainMenu : MonoBehaviour {
         SceneManager.LoadScene("ArenaOne");
     }
 
+    public void MultiplayerGame()
+    {
+        SceneManager.LoadScene("MultiplayerMainLobby");
+    }
+
     public void QuiteGame()
     {
         Debug.Log("Quit game button pressed.");

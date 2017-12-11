@@ -16,6 +16,9 @@ public class LobbyNetwork : MonoBehaviour {
     {
         print("Connected to master");
 
+        //whenever connected to room, will sync to whatever scene the master client is currently on
+        PhotonNetwork.automaticallySyncScene = false;
+
         //Setting player name
         PhotonNetwork.playerName = PlayerNetwork.Instance.PlayerName;
 

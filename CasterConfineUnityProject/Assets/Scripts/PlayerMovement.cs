@@ -7,7 +7,7 @@ using UnityEngine;
 //[RequireComponent(typeof(BoxCollider))]
 //do I need other required components?
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : Photon.MonoBehaviour              //added photon. (important)
 {
     /*
     public Rigidbody playerRigidBody;           // add the rigid body to this field
@@ -37,13 +37,6 @@ public class PlayerMovement : MonoBehaviour
     private Transform myTransform;      //cache to improve performance
     private Quaternion targetRotation;
 
-    //the cast circle (attach it in inspector)
-    public GameObject CastCircle;
-    private bool noFizzle;
-    GameObject noFizzleCircle;
-
-    //busy casting bool - so you can't spam cast process
-    private bool busy = false;
 
     // Use this for initialization
     void Awake()
@@ -226,14 +219,14 @@ public class PlayerMovement : MonoBehaviour
         }
         #endregion
 
-        ControlMethod(stateInt);
-
+        ControlMethod(stateInt);                        // this has to do with defining the state of movement.
+                                                        // was going to use this to define what can be done when starting to cast
 
     }
 
     
-    void ControlMethod(int currentState)
-    {
+    void ControlMethod(int currentState)                //state gets changed when casting etc... to be called when doing so
+    {                                                   //I removed all the casting code from this script
         switch (currentState)
         {
             case 0: //running
@@ -243,16 +236,16 @@ public class PlayerMovement : MonoBehaviour
             case 1: //castnormal
                     // z, c, x are ignored in non-combo processing
                     // w changes bool to take 1 step forward when called
-                castnormalPls();
+         //       castnormalPls();
                 break;
             case 2: //breakanimation
                     // w, z, c, x are ignored in non-combo processing
                     // new combinations change bool to break animation + 1 step forward
-                breakAnimationPls();
+         //       breakAnimationPls();
                 break;
             case 3: //hiccup
                     //all keys and combos ignored in processing
-                hiccupPls();
+         //       hiccupPls();
                 break;
         }
     }
@@ -271,7 +264,7 @@ public class PlayerMovement : MonoBehaviour
         //{ Debug.Log(m); }
 
         string items = "";
-        if (mHash.TryGetValue(m, out items))
+        if (mHash.TryGetValue(m, out items))                                            //the stored list or hash looks for these combos
         {
             if (items == "interruptleft")
             {
@@ -351,205 +344,7 @@ public class PlayerMovement : MonoBehaviour
             if (z == Move.dc) { move = move + 'c'; transform.position += transform.right * incSpeed * redSpeed * Time.deltaTime; }
         }
     }
-
-    void castnormalPls()
-    {
-        string m = "";
-
-        foreach (char i in mList)
-        {
-            m = m + i.ToString();
-        }
-        Debug.Log(m);
-
-        string items = "";
-        if (mHash.TryGetValue(m, out items))
-        {
-            if (items == "interruptleft")
-            {
-                step = true;
-                transform.Rotate(Vector3.down * rotSpeed * Time.deltaTime);
-            }
-            else if (items == "interruptright")
-            {
-                step = true;
-                transform.Rotate(Vector3.up * rotSpeed * Time.deltaTime);
-            }
-            else if (items == "sslideright")
-            {
-                transform.position += -transform.forward * redSpeed * Time.deltaTime;
-                transform.position += -transform.right * slidePower * Time.deltaTime;
-            }
-            else if (items == "sslideleft")
-            {
-                transform.position += -transform.forward * redSpeed * Time.deltaTime;
-                transform.position += transform.right * slidePower * Time.deltaTime;
-            }
-            else if (items == "arcoutleft")
-            {
-                transform.position += -transform.right * slidePower * Time.deltaTime;
-                transform.Rotate(Vector3.up * rotSpeed * Time.deltaTime);
-            }
-            else if (items == "arcbackleft")
-            {
-                transform.position += -transform.right * slidePower * Time.deltaTime;
-                transform.Rotate(Vector3.down * rotSpeed * Time.deltaTime);
-            }
-            else if (items == "arcoutright")
-            {
-                transform.position += transform.right * slidePower * Time.deltaTime;
-                transform.Rotate(Vector3.up * rotSpeed * Time.deltaTime);
-            }
-            else if (items == "arcbackright")
-            {
-                transform.position += transform.right * slidePower * Time.deltaTime;
-                transform.Rotate(Vector3.down * rotSpeed * Time.deltaTime);
-            }
-            else if (items == "Idle") { mList.Clear(); }
-            else if (items == "dump") { mList.Clear(); }
-        }
-        else
-        {
-            var w = Move.off;
-            var x = Move.off;
-            var a = Move.off;
-            var z = Move.off;
-            string move = "";
-
-            foreach (char i in m)
-            {
-                if (i == 'w')
-                {
-                    w = Move.wxaz;
-                    x = Move.off;
-                }
-                else if (i == 'W') w = Move.off;
-                else if (i == 'x')
-                {
-                    x = Move.off;
-                    w = Move.off;
-                }
-                else if (i == 'X') x = Move.off;
-                else if (i == 'a') a = Move.wxaz;
-                else if (i == 'd') a = Move.dc;
-                else if (i == 'z') z = Move.off;
-                else if (i == 'c') z = Move.off;
-            }
-            if (w == Move.wxaz) { step = true; }
-            if (x == Move.wxaz) { }
-            if (a == Move.wxaz) { move = move + 'a'; transform.Rotate(Vector3.down * rotSpeed * Time.deltaTime); }
-            if (a == Move.dc) { move = move + 'd'; transform.Rotate(Vector3.up * rotSpeed * Time.deltaTime); }
-            if (z == Move.wxaz) { }
-            if (z == Move.dc) { }
-        }
-    }
-
-    void breakAnimationPls()
-    {
-        string m = "";
-
-        foreach (char i in mList)
-        {
-            m = m + i.ToString();
-        }
-        Debug.Log(m);
-
-        string items = "";
-        if (mHash.TryGetValue(m, out items))
-        {
-            if (items == "interruptleft")
-            {
-                step = true;
-                interrupt = true;
-                transform.Rotate(Vector3.down * rotSpeed * Time.deltaTime);
-            }
-            else if (items == "interruptright")
-            {
-                interrupt = true;
-                transform.Rotate(Vector3.up * rotSpeed * Time.deltaTime);
-            }
-            else if (items == "sslideright")
-            {
-                transform.position += -transform.forward * redSpeed * Time.deltaTime;
-                transform.position += -transform.right * slidePower * Time.deltaTime;
-            }
-            else if (items == "sslideleft")
-            {
-                transform.position += -transform.forward * redSpeed * Time.deltaTime;
-                transform.position += transform.right * slidePower * Time.deltaTime;
-            }
-            else if (items == "arcoutleft")
-            {
-                transform.position += -transform.right * slidePower * Time.deltaTime;
-                transform.Rotate(Vector3.up * rotSpeed * Time.deltaTime);
-            }
-            else if (items == "arcbackleft")
-            {
-                transform.position += -transform.right * slidePower * Time.deltaTime;
-                transform.Rotate(Vector3.down * rotSpeed * Time.deltaTime);
-            }
-            else if (items == "arcoutright")
-            {
-                transform.position += transform.right * slidePower * Time.deltaTime;
-                transform.Rotate(Vector3.up * rotSpeed * Time.deltaTime);
-            }
-            else if (items == "arcbackright")
-            {
-                transform.position += transform.right * slidePower * Time.deltaTime;
-                transform.Rotate(Vector3.down * rotSpeed * Time.deltaTime);
-            }
-            else if (items == "Idle") { mList.Clear(); }
-            else if (items == "dump") { mList.Clear(); }
-        }
-        else
-        {
-            var w = Move.off;
-            var x = Move.off;
-            var a = Move.off;
-            var z = Move.off;
-            string move = "";
-
-            foreach (char i in m)
-            {
-                if (i == 'w')
-                {
-                    w = Move.wxaz;
-                    x = Move.off;
-                }
-                else if (i == 'W') w = Move.off;
-                else if (i == 'x')
-                {
-                    x = Move.off;
-                    w = Move.off;
-                }
-                else if (i == 'X') x = Move.off;
-                else if (i == 'a') a = Move.wxaz;
-                else if (i == 'd') a = Move.dc;
-                else if (i == 'z') z = Move.off;
-                else if (i == 'c') z = Move.off;
-            }
-            if (w == Move.wxaz) { step = true; }
-            if (x == Move.wxaz) { }
-            if (a == Move.wxaz) { move = move + 'a'; transform.Rotate(Vector3.down * rotSpeed * Time.deltaTime); }
-            if (a == Move.dc) { move = move + 'd'; transform.Rotate(Vector3.up * rotSpeed * Time.deltaTime); }
-            if (z == Move.wxaz) { }
-            if (z == Move.dc) { }
-        }
-    }
-
-    void hiccupPls()
-    {
-        mList.Clear();
-
-        string m = "";
-
-        foreach (char i in mList)
-        {
-            m = m + i.ToString();
-        }
-        Debug.Log(m);
-    }
-        
+    
     enum Move { off, wxaz, dc };
 
 }

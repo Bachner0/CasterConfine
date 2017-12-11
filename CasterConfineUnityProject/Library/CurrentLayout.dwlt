@@ -106,8 +106,8 @@ MonoBehaviour:
     y: 30
     width: 1920
     height: 947
-  m_MinSize: {x: 679, y: 492}
-  m_MaxSize: {x: 14002, y: 14042}
+  m_MinSize: {x: 683, y: 492}
+  m_MaxSize: {x: 14004, y: 14042}
   vertical: 0
   controlID: 9
 --- !u!114 &6
@@ -130,7 +130,7 @@ MonoBehaviour:
     y: 0
     width: 1529
     height: 947
-  m_MinSize: {x: 404, y: 492}
+  m_MinSize: {x: 406, y: 492}
   m_MaxSize: {x: 10002, y: 14042}
   vertical: 1
   controlID: 10
@@ -154,8 +154,8 @@ MonoBehaviour:
     y: 0
     width: 1529
     height: 573
-  m_MinSize: {x: 404, y: 221}
-  m_MaxSize: {x: 8004, y: 4021}
+  m_MinSize: {x: 406, y: 221}
+  m_MaxSize: {x: 8006, y: 4021}
   vertical: 0
   controlID: 11
 --- !u!114 &8
@@ -201,8 +201,8 @@ MonoBehaviour:
     y: 0
     width: 1147
     height: 573
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 204, y: 221}
+  m_MaxSize: {x: 4004, y: 4021}
   m_ActualView: {fileID: 12}
   m_Panes:
   - {fileID: 12}
@@ -254,8 +254,8 @@ MonoBehaviour:
     y: 0
     width: 391
     height: 947
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 277, y: 71}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 18}
@@ -322,9 +322,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 135.21864
+    m_Target: 139.87859
     speed: 2
-    m_Value: 135.21864
+    m_Value: 139.87859
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -365,7 +365,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: bed9fbff3adafbff38dbfbff48dbfbff54dbfbff721cfcffee1cfcffec1dfcfffc1dfcff081efcff764ffcffee55fcff4c77fcffc477fcffc278fcffd278fcffde78fcffd06dfeff4671feff8873feffb475feff807afeff287ffeff6486feffdc86feffda87feffea87fefff687feffd0a1feff48a2feff4aa3feff5aa3feff66a3feffacc2feffe6fbffff00000000ea260000022700004027000052270000a02b0000082c0000742f0000e42f00009e340000b634000006350000ac3a00006c3b0000863b0000763e0000503f000054450000144600002e460000a84d0000824e0000
+    m_ExpandedIDs: fa62fcff7e63fcff7e64fcff8e64fcff9a64fcff2295fcffa695fcffa696fcffb696fcffc296fcff3a3bfdffbe3bfdffbe3cfdffce3cfdffda3cfdffca49fdff4e4afdff4e4bfdff5e4bfdff6a4bfdff4059fdffc459fdffc45afdffd45afdffe05afdffee07feff7408feff7409feff8409feff9009feff9621feff1c22feff1c23feff2c23feff3823feff5236feffd836feffd837feffe837fefff437feffc68cfeff3ef9ffffacf9ffffc0f9ffffdaf9ffff10faffffe6fbffff00000000ee27000072360000884d0000dc4d0000744e0000d04e0000ca570000345800004658000020590000ca65000026660000a46d0000b66d0000f86d0000906e0000ec6e0000147800005078000062780000a47800003c790000987900001a8100006e81000006820000628200008e900000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -527,19 +527,19 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Scenes
+    - Assets/Scripts/CurrentRoom
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Scenes
+  - Assets/Scripts/CurrentRoom
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Users\Mattdawg\Documents\CasterConfine\CasterConfine\CasterConfineUnityProject
   m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 54260000
-    m_LastClickedID: 9812
-    m_ExpandedIDs: 000000008c25000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 4}
+    m_SelectedIDs: 2a2a0000
+    m_LastClickedID: 10794
+    m_ExpandedIDs: 000000008c2500002626000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -595,21 +595,21 @@ MonoBehaviour:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
     m_HadKeyboardFocusLastEvent: 1
-    m_ExpandedInstanceIDs: c623000000000000a2250000
+    m_ExpandedInstanceIDs: c623000000000000a2250000d6c2ffff0c260000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
+      m_Name: Lobby
+      m_OriginalName: Lobby
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 0
+      m_UserData: 10756
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 11
+      m_OriginalEventType: 0
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 10}
     m_CreateAssetUtility:

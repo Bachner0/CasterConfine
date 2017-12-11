@@ -162,17 +162,20 @@
     <Compile Include="Assets\PhotonChatApi\IChatClientListener.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\CreateRoom.cs" />
-    <Compile Include="Assets\Scripts\DDOL.cs" />
+    <Compile Include="Assets\Scripts\CurrentRoom\CurrentRoomCanvas.cs" />
+    <Compile Include="Assets\Scripts\CurrentRoom\PlayerLayoutGroup.cs" />
+    <Compile Include="Assets\Scripts\CurrentRoom\PlayerListing.cs" />
     <Compile Include="Assets\Scripts\GameLogic.cs" />
-    <Compile Include="Assets\Scripts\LobbyCanvas.cs" />
-    <Compile Include="Assets\Scripts\LobbyNetwork.cs" />
+    <Compile Include="Assets\Scripts\Generic\DDOL.cs" />
+    <Compile Include="Assets\Scripts\Generic\RandomCode.cs" />
+    <Compile Include="Assets\Scripts\Lobby\LobbyCanvas.cs" />
+    <Compile Include="Assets\Scripts\Lobby\RoomLayoutGroup.cs" />
+    <Compile Include="Assets\Scripts\Lobby\RoomListing.cs" />
     <Compile Include="Assets\Scripts\MainMPCanvasManager.cs" />
     <Compile Include="Assets\Scripts\MainMenu.cs" />
+    <Compile Include="Assets\Scripts\Networks\LobbyNetwork.cs" />
+    <Compile Include="Assets\Scripts\Networks\PlayerNetwork.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
-    <Compile Include="Assets\Scripts\PlayerNetwork.cs" />
-    <Compile Include="Assets\Scripts\RandomCode.cs" />
-    <Compile Include="Assets\Scripts\RoomLayoutGroup.cs" />
-    <Compile Include="Assets\Scripts\RoomListing.cs" />
     <Compile Include="Assets\Scripts\SelectObject.cs" />
   </ItemGroup>
   <ItemGroup>

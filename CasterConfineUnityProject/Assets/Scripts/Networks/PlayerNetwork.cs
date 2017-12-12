@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 public class PlayerNetwork : MonoBehaviour {
 
@@ -15,6 +16,12 @@ public class PlayerNetwork : MonoBehaviour {
         PhotonView = GetComponent<PhotonView>();
         //To identify people
         PlayerName = "Matt#" + Random.Range(1000, 9999);
+
+
+        //determines how much to push the communication send rate of packets - will result in higher bandwidth if higher, but more accurate
+        PhotonNetwork.sendRate = 60;                    //default is 20
+        PhotonNetwork.sendRateOnSerialize = 30;         //default is 10
+
 
         SceneManager.sceneLoaded += OnSceneFinishedLoading;     //creates a delegate the occurs when a scene is loaded that calls the below method.
 	}
@@ -56,6 +63,14 @@ public class PlayerNetwork : MonoBehaviour {
         if (PlayersInGame == PhotonNetwork.playerList.Length)
         {
             print("All players are in the game scene.");
+            PhotonView.RPC("RPC_CreatePlayer", PhotonTargets.All);      //called for all new players entering room - it instantiates them with the location and prefab (below)
         }
     }
+
+    [PunRPC]
+    private void RPC_CreatePlayer()
+    {
+        PhotonNetwork.Instantiate(Path.Combine("Prefabs", "NewPlayer"), Vector3.zero, Quaternion.identity, 0); //the last setting is for group ??
+    }
+
 }

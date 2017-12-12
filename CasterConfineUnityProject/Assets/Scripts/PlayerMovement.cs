@@ -26,21 +26,28 @@ public class PlayerMovement : Photon.MonoBehaviour              //added photon. 
     //variable for playerstate switch statement
     private int stateInt = 0;
 
-    //bool for step forward
-    private bool step = false;
-    private float stepTime = .4f;           //time for forward step
-
-    //bool for interrupt
-    private bool interrupt = false;
 
     //rotating variables
-    private Transform myTransform;      //cache to improve performance
+    //private Transform myTransform;      //cache to improve performance
     private Quaternion targetRotation;
 
+
+    //16:49 in #7       smooth move -- variables so that other objects move smoothly. not sure if i want
+                        // additionally, we put this component into the photonview focus
+    private Vector3 TargetPosition;
+    private Quaternion TargetRotation;
+
+
+
+
+    private PhotonView PhotonView;    
 
     // Use this for initialization
     void Awake()
     {
+        PhotonView = GetComponent<PhotonView>();
+
+
         // Powerslide combos
         mHash.Add("wW", "Idle");
         mHash.Add("xX", "Idle");
@@ -79,7 +86,7 @@ public class PlayerMovement : Photon.MonoBehaviour              //added photon. 
     private void Start()
     {
         //anim = GetComponent<Animator>();
-        myTransform = transform;
+        //myTransform = transform;
 
         // GameObject.Find("CastCollider").GetComponent<CastCollider>().okToCast    -  need to get access to the bool in the cast circle prefab
 
@@ -88,7 +95,45 @@ public class PlayerMovement : Photon.MonoBehaviour              //added photon. 
     // Update is called once per frame
     void Update()
     {
-        
+        if (PhotonView.isMine)
+        {
+            CheckInput();
+        }
+        else
+        {
+            //16:49 in #7       smooth move -- not sure if i want
+            SmoothMove();
+        }
+    }
+
+    //called every time you receive a packet for this object, whether it is yours or someone else's. that is why this component is added to photonview focus
+    private void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.isWriting) //true is we are sending the data
+        {
+            //the order of data sent
+            stream.SendNext(transform.position);
+            stream.SendNext(transform.rotation);
+        }
+        else
+        {
+            //must be the same order as above
+            TargetPosition = (Vector3)stream.ReceiveNext();
+            TargetRotation = (Quaternion)stream.ReceiveNext();
+        }
+    }
+
+
+    //16:49 in #7       smooth move -- not sure if i want
+    private void SmoothMove()
+    {
+        transform.position = Vector3.Lerp(transform.position, TargetPosition, 0.25f);   //the float is between 0 and 1. higher means less accurate
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, TargetRotation, 500 * Time.deltaTime);
+    }
+
+    private void CheckInput()
+    { 
+
         #region Movement input
 
         if (Input.GetKeyDown(KeyCode.W))

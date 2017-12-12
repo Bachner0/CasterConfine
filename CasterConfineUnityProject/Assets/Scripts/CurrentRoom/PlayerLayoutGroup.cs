@@ -29,12 +29,16 @@ public class PlayerLayoutGroup : MonoBehaviour
     }
     */
 
-        //    *********  we have a problem where host name stays in room if host leaves.
-
 
     //called by photon whenever you join a room.
     private void OnJoinedRoom()
     {
+        //this makes the duplicates from host leaving not happen.
+        foreach(Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+
         MainMPCanvasManager.Instance.CurrentRoomCanvas.transform.SetAsLastSibling();
 
         PhotonPlayer[] photonPlayers = PhotonNetwork.playerList;

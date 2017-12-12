@@ -7,7 +7,7 @@ using UnityEngine;
 //[RequireComponent(typeof(BoxCollider))]
 //do I need other required components?
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : Photon.MonoBehaviour              //added photon. (important)
 {
     /*
     public Rigidbody playerRigidBody;           // add the rigid body to this field
@@ -26,28 +26,28 @@ public class PlayerMovement : MonoBehaviour
     //variable for playerstate switch statement
     private int stateInt = 0;
 
-    //bool for step forward
-    private bool step = false;
-    private float stepTime = .4f;           //time for forward step
-
-    //bool for interrupt
-    private bool interrupt = false;
 
     //rotating variables
-    private Transform myTransform;      //cache to improve performance
+    //private Transform myTransform;      //cache to improve performance
     private Quaternion targetRotation;
 
-    //the cast circle (attach it in inspector)
-    public GameObject CastCircle;
-    private bool noFizzle;
-    GameObject noFizzleCircle;
 
-    //busy casting bool - so you can't spam cast process
-    private bool busy = false;
+    //16:49 in #7       smooth move -- variables so that other objects move smoothly. not sure if i want
+                        // additionally, we put this component into the photonview focus
+    private Vector3 TargetPosition;
+    private Quaternion TargetRotation;
+
+
+
+
+    private PhotonView PhotonView;    
 
     // Use this for initialization
     void Awake()
     {
+        PhotonView = GetComponent<PhotonView>();
+
+
         // Powerslide combos
         mHash.Add("wW", "Idle");
         mHash.Add("xX", "Idle");
@@ -86,7 +86,7 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         //anim = GetComponent<Animator>();
-        myTransform = transform;
+        //myTransform = transform;
 
         // GameObject.Find("CastCollider").GetComponent<CastCollider>().okToCast    -  need to get access to the bool in the cast circle prefab
 
@@ -95,7 +95,45 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (PhotonView.isMine)
+        {
+            CheckInput();
+        }
+        else
+        {
+            //16:49 in #7       smooth move -- not sure if i want
+            SmoothMove();
+        }
+    }
+
+    //called every time you receive a packet for this object, whether it is yours or someone else's. that is why this component is added to photonview focus
+    private void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.isWriting) //true is we are sending the data
+        {
+            //the order of data sent
+            stream.SendNext(transform.position);
+            stream.SendNext(transform.rotation);
+        }
+        else
+        {
+            //must be the same order as above
+            TargetPosition = (Vector3)stream.ReceiveNext();
+            TargetRotation = (Quaternion)stream.ReceiveNext();
+        }
+    }
+
+
+    //16:49 in #7       smooth move -- not sure if i want
+    private void SmoothMove()
+    {
+        transform.position = Vector3.Lerp(transform.position, TargetPosition, 0.25f);   //the float is between 0 and 1. higher means less accurate
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, TargetRotation, 500 * Time.deltaTime);
+    }
+
+    private void CheckInput()
+    { 
+
         #region Movement input
 
         if (Input.GetKeyDown(KeyCode.W))
@@ -226,14 +264,14 @@ public class PlayerMovement : MonoBehaviour
         }
         #endregion
 
-        ControlMethod(stateInt);
-
+        ControlMethod(stateInt);                        // this has to do with defining the state of movement.
+                                                        // was going to use this to define what can be done when starting to cast
 
     }
 
     
-    void ControlMethod(int currentState)
-    {
+    void ControlMethod(int currentState)                //state gets changed when casting etc... to be called when doing so
+    {                                                   //I removed all the casting code from this script
         switch (currentState)
         {
             case 0: //running
@@ -243,16 +281,16 @@ public class PlayerMovement : MonoBehaviour
             case 1: //castnormal
                     // z, c, x are ignored in non-combo processing
                     // w changes bool to take 1 step forward when called
-                castnormalPls();
+         //       castnormalPls();
                 break;
             case 2: //breakanimation
                     // w, z, c, x are ignored in non-combo processing
                     // new combinations change bool to break animation + 1 step forward
-                breakAnimationPls();
+         //       breakAnimationPls();
                 break;
             case 3: //hiccup
                     //all keys and combos ignored in processing
-                hiccupPls();
+         //       hiccupPls();
                 break;
         }
     }
@@ -271,7 +309,7 @@ public class PlayerMovement : MonoBehaviour
         //{ Debug.Log(m); }
 
         string items = "";
-        if (mHash.TryGetValue(m, out items))
+        if (mHash.TryGetValue(m, out items))                                            //the stored list or hash looks for these combos
         {
             if (items == "interruptleft")
             {
@@ -351,205 +389,7 @@ public class PlayerMovement : MonoBehaviour
             if (z == Move.dc) { move = move + 'c'; transform.position += transform.right * incSpeed * redSpeed * Time.deltaTime; }
         }
     }
-
-    void castnormalPls()
-    {
-        string m = "";
-
-        foreach (char i in mList)
-        {
-            m = m + i.ToString();
-        }
-        Debug.Log(m);
-
-        string items = "";
-        if (mHash.TryGetValue(m, out items))
-        {
-            if (items == "interruptleft")
-            {
-                step = true;
-                transform.Rotate(Vector3.down * rotSpeed * Time.deltaTime);
-            }
-            else if (items == "interruptright")
-            {
-                step = true;
-                transform.Rotate(Vector3.up * rotSpeed * Time.deltaTime);
-            }
-            else if (items == "sslideright")
-            {
-                transform.position += -transform.forward * redSpeed * Time.deltaTime;
-                transform.position += -transform.right * slidePower * Time.deltaTime;
-            }
-            else if (items == "sslideleft")
-            {
-                transform.position += -transform.forward * redSpeed * Time.deltaTime;
-                transform.position += transform.right * slidePower * Time.deltaTime;
-            }
-            else if (items == "arcoutleft")
-            {
-                transform.position += -transform.right * slidePower * Time.deltaTime;
-                transform.Rotate(Vector3.up * rotSpeed * Time.deltaTime);
-            }
-            else if (items == "arcbackleft")
-            {
-                transform.position += -transform.right * slidePower * Time.deltaTime;
-                transform.Rotate(Vector3.down * rotSpeed * Time.deltaTime);
-            }
-            else if (items == "arcoutright")
-            {
-                transform.position += transform.right * slidePower * Time.deltaTime;
-                transform.Rotate(Vector3.up * rotSpeed * Time.deltaTime);
-            }
-            else if (items == "arcbackright")
-            {
-                transform.position += transform.right * slidePower * Time.deltaTime;
-                transform.Rotate(Vector3.down * rotSpeed * Time.deltaTime);
-            }
-            else if (items == "Idle") { mList.Clear(); }
-            else if (items == "dump") { mList.Clear(); }
-        }
-        else
-        {
-            var w = Move.off;
-            var x = Move.off;
-            var a = Move.off;
-            var z = Move.off;
-            string move = "";
-
-            foreach (char i in m)
-            {
-                if (i == 'w')
-                {
-                    w = Move.wxaz;
-                    x = Move.off;
-                }
-                else if (i == 'W') w = Move.off;
-                else if (i == 'x')
-                {
-                    x = Move.off;
-                    w = Move.off;
-                }
-                else if (i == 'X') x = Move.off;
-                else if (i == 'a') a = Move.wxaz;
-                else if (i == 'd') a = Move.dc;
-                else if (i == 'z') z = Move.off;
-                else if (i == 'c') z = Move.off;
-            }
-            if (w == Move.wxaz) { step = true; }
-            if (x == Move.wxaz) { }
-            if (a == Move.wxaz) { move = move + 'a'; transform.Rotate(Vector3.down * rotSpeed * Time.deltaTime); }
-            if (a == Move.dc) { move = move + 'd'; transform.Rotate(Vector3.up * rotSpeed * Time.deltaTime); }
-            if (z == Move.wxaz) { }
-            if (z == Move.dc) { }
-        }
-    }
-
-    void breakAnimationPls()
-    {
-        string m = "";
-
-        foreach (char i in mList)
-        {
-            m = m + i.ToString();
-        }
-        Debug.Log(m);
-
-        string items = "";
-        if (mHash.TryGetValue(m, out items))
-        {
-            if (items == "interruptleft")
-            {
-                step = true;
-                interrupt = true;
-                transform.Rotate(Vector3.down * rotSpeed * Time.deltaTime);
-            }
-            else if (items == "interruptright")
-            {
-                interrupt = true;
-                transform.Rotate(Vector3.up * rotSpeed * Time.deltaTime);
-            }
-            else if (items == "sslideright")
-            {
-                transform.position += -transform.forward * redSpeed * Time.deltaTime;
-                transform.position += -transform.right * slidePower * Time.deltaTime;
-            }
-            else if (items == "sslideleft")
-            {
-                transform.position += -transform.forward * redSpeed * Time.deltaTime;
-                transform.position += transform.right * slidePower * Time.deltaTime;
-            }
-            else if (items == "arcoutleft")
-            {
-                transform.position += -transform.right * slidePower * Time.deltaTime;
-                transform.Rotate(Vector3.up * rotSpeed * Time.deltaTime);
-            }
-            else if (items == "arcbackleft")
-            {
-                transform.position += -transform.right * slidePower * Time.deltaTime;
-                transform.Rotate(Vector3.down * rotSpeed * Time.deltaTime);
-            }
-            else if (items == "arcoutright")
-            {
-                transform.position += transform.right * slidePower * Time.deltaTime;
-                transform.Rotate(Vector3.up * rotSpeed * Time.deltaTime);
-            }
-            else if (items == "arcbackright")
-            {
-                transform.position += transform.right * slidePower * Time.deltaTime;
-                transform.Rotate(Vector3.down * rotSpeed * Time.deltaTime);
-            }
-            else if (items == "Idle") { mList.Clear(); }
-            else if (items == "dump") { mList.Clear(); }
-        }
-        else
-        {
-            var w = Move.off;
-            var x = Move.off;
-            var a = Move.off;
-            var z = Move.off;
-            string move = "";
-
-            foreach (char i in m)
-            {
-                if (i == 'w')
-                {
-                    w = Move.wxaz;
-                    x = Move.off;
-                }
-                else if (i == 'W') w = Move.off;
-                else if (i == 'x')
-                {
-                    x = Move.off;
-                    w = Move.off;
-                }
-                else if (i == 'X') x = Move.off;
-                else if (i == 'a') a = Move.wxaz;
-                else if (i == 'd') a = Move.dc;
-                else if (i == 'z') z = Move.off;
-                else if (i == 'c') z = Move.off;
-            }
-            if (w == Move.wxaz) { step = true; }
-            if (x == Move.wxaz) { }
-            if (a == Move.wxaz) { move = move + 'a'; transform.Rotate(Vector3.down * rotSpeed * Time.deltaTime); }
-            if (a == Move.dc) { move = move + 'd'; transform.Rotate(Vector3.up * rotSpeed * Time.deltaTime); }
-            if (z == Move.wxaz) { }
-            if (z == Move.dc) { }
-        }
-    }
-
-    void hiccupPls()
-    {
-        mList.Clear();
-
-        string m = "";
-
-        foreach (char i in mList)
-        {
-            m = m + i.ToString();
-        }
-        Debug.Log(m);
-    }
-        
+    
     enum Move { off, wxaz, dc };
 
 }

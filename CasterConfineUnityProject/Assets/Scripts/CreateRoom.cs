@@ -18,7 +18,7 @@ public class CreateRoom : MonoBehaviour
         //Define room settings................**** come back to expand this to give player ability to modify settings *****
 
         RoomOptions roomOptions = new RoomOptions() { IsVisible = true, IsOpen = true, MaxPlayers = 4 };
-
+        
 
         if (PhotonNetwork.CreateRoom(RoomName.text, roomOptions, TypedLobby.Default))        //tell photon to create the room
         {

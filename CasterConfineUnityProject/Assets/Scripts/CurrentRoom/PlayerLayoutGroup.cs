@@ -101,7 +101,8 @@ public class PlayerLayoutGroup : MonoBehaviour
 
 
 
-    //the toggle button method
+    //the toggle button method for making the room open or closed
+    /*
     public void OnClickRoomState()
     {
         //only want the room host (master client) to be able to do this
@@ -120,6 +121,7 @@ public class PlayerLayoutGroup : MonoBehaviour
             SetRoomStateText("Open Room");
         }
     }
+    */
 
     public void OnClickLeaveRoom()
     {

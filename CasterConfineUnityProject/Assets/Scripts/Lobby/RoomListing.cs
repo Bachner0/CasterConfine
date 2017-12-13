@@ -13,6 +13,7 @@ public class RoomListing : MonoBehaviour {
 
     public string RoomName { get; private set; }
 
+
     public bool Updated { get; set; }
 
 	private void Start ()

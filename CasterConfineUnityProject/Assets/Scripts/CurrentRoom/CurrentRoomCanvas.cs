@@ -5,18 +5,14 @@ public class CurrentRoomCanvas : MonoBehaviour
 {
 
     /*
-        NEED to hide buttons if not the host
+        NEED to disable buttons if not the host
 
     */
 
-    public void OnClickStartSync()
-    {
-        if (!PhotonNetwork.isMasterClient)      //can't click if not host
-            return;
 
-        //loads the scene #..... will want to modify this method based on the room settings
-        PhotonNetwork.LoadLevel(1);
-    }
+
+
+
 
     public void OnClickStartDelayed()
     {
@@ -29,3 +25,16 @@ public class CurrentRoomCanvas : MonoBehaviour
     }
 
 }
+
+
+//Use this method to make a match that is continuous...
+/*
+public void OnClickStartSync()
+{
+    if (!PhotonNetwork.isMasterClient)      //can't click if not host
+        return;
+
+    //loads the scene #..... will want to modify this method based on the room settings
+    PhotonNetwork.LoadLevel(1);
+}
+*/

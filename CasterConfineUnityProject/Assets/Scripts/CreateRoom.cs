@@ -6,21 +6,31 @@ using UnityEngine.UI;
 public class CreateRoom : MonoBehaviour
 {
 
-    [SerializeField]
-    private Text _roomName; //accessor
-    private Text RoomName
-    {
-        get { return _roomName; }
-    }
+    private string RoomName;
+    private string RoomTitle;
+    private int RoomPlayerCount;
+    private string RoomMapName;
+    private int RoomTimeLimit;
+    //private bool RoomSpectators;
 
     public void OnClick_CreateRoom()
     {
-        //Define room settings................**** come back to expand this to give player ability to modify settings *****
+        //Default room settings
+        //Name: Relic Spire #random
+        //PlayerCount: 2 (1v1)
+        //Map: ArenaOne
+        //TimeLimit: 10 mins
+        //AllowSpectators: false
+        RoomTitle = "Relic Spire #" + Random.Range(1000, 9999);
+        RoomPlayerCount = 2;
+        RoomMapName = "ArenaOne";
+        RoomTimeLimit = 10;
 
-        RoomOptions roomOptions = new RoomOptions() { IsVisible = true, IsOpen = true, MaxPlayers = 4 };
-        
+        RoomName = RoomTitle + "\nPlayers: " + RoomPlayerCount + "   Zone: " + RoomMapName + "   Time Limit: " + RoomTimeLimit + "m";
 
-        if (PhotonNetwork.CreateRoom(RoomName.text, roomOptions, TypedLobby.Default))        //tell photon to create the room
+        RoomOptions roomOptions = new RoomOptions() { IsVisible = true, IsOpen = true, MaxPlayers = 2 };
+
+        if (PhotonNetwork.CreateRoom(RoomName, roomOptions, TypedLobby.Default))        //tell photon to create the room
         {
             print("Create room successfully sent");
         }

@@ -20,6 +20,19 @@ public class PlayerLayoutGroup : MonoBehaviour
         get { return _playerListings; }
     }
 
+    [SerializeField]
+    private Button StartMatchButton;
+    [SerializeField]
+    private InputField RoomTitleField;
+    [SerializeField]
+    private Button TitleSet;
+    [SerializeField]
+    private Dropdown PlayerCount;
+    [SerializeField]
+    private Dropdown MapSelection;
+    [SerializeField]
+    private Dropdown TimeLimit;
+
 
     //called whenever the master leaves and called on all players - this would boot all players if the host leaves
     /*
@@ -91,6 +104,7 @@ public class PlayerLayoutGroup : MonoBehaviour
         }
     }
 
+    /*
     [SerializeField]
     private Text _roomStateText;
     private Text RoomStateText
@@ -98,7 +112,7 @@ public class PlayerLayoutGroup : MonoBehaviour
         get { return _roomStateText; }
     }
     public string RoomState { get; private set; }
-
+    */
 
 
     //the toggle button method for making the room open or closed
@@ -126,12 +140,28 @@ public class PlayerLayoutGroup : MonoBehaviour
     public void OnClickLeaveRoom()
     {
         PhotonNetwork.LeaveRoom();
+        ResetRoomOptionsPermissions();
+
     }
 
+
+    //this might not be used anymore
     //when called it will set the text from the create room stuff to be the name of the game room
+    /*
     public void SetRoomStateText(string text)
     {
         RoomState = text;                    // helps to locate potential problem
         RoomStateText.text = RoomState;       // .text is a property of the Text component
+    }
+    */
+
+    public void ResetRoomOptionsPermissions()
+    {
+            StartMatchButton.GetComponent<Button>().interactable = true;
+            RoomTitleField.GetComponent<InputField>().interactable = true;
+            TitleSet.GetComponent<Button>().interactable = true;
+            PlayerCount.GetComponent<Dropdown>().interactable = true;
+            MapSelection.GetComponent<Dropdown>().interactable = true;
+            TimeLimit.GetComponent<Dropdown>().interactable = true;
     }
 }

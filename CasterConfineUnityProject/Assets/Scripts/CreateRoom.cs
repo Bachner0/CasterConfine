@@ -7,11 +7,16 @@ public class CreateRoom : MonoBehaviour
 {
 
     private string RoomName;
-    private string RoomTitle;
-    private int RoomPlayerCount;
-    private string RoomMapName;
-    private int RoomTimeLimit;
+
+    public string RoomTitle;
+    public int RoomPlayerCount;
+    public string RoomMapName;
+    public int RoomTimeLimit;
     //private bool RoomSpectators;
+
+
+
+
 
     public void OnClick_CreateRoom()
     {
@@ -25,6 +30,15 @@ public class CreateRoom : MonoBehaviour
         RoomPlayerCount = 2;
         RoomMapName = "ArenaOne";
         RoomTimeLimit = 10;
+
+        /*
+         * Making the room invisible is a good way to hide it from randomly joining players, yes.
+You shouldn't change the room's name though. It's the ID by which we find and handle the room.
+Better: Use a room property to store the current scenery name. The props are available for new players before events come in, so you can pause the message queue and load the scenery, before you turn on the queue again when you loaded.
+PhotonNetwork.LoadLevel and PhotonNetwork.automaticallySyncScene = true will do this for you, too.
+*/
+
+
 
         RoomName = RoomTitle + "\nPlayers: " + RoomPlayerCount + "   Zone: " + RoomMapName + "   Time Limit: " + RoomTimeLimit + "m";
 
@@ -49,5 +63,8 @@ public class CreateRoom : MonoBehaviour
     {
         print("Room created successfully");
     }
+
+
+
 
 }

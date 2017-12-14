@@ -14,15 +14,23 @@ public class CurrentRoomCanvas : MonoBehaviour
 
 
 
+
+
+
+    //start match function
     public void OnClickStartDelayed()
     {
         if (!PhotonNetwork.isMasterClient)      //can't click if not host
             return;
 
+
         PhotonNetwork.room.IsOpen = false;
         PhotonNetwork.room.IsVisible = false;
         PhotonNetwork.LoadLevel(1);
     }
+
+    
+
 
 }
 

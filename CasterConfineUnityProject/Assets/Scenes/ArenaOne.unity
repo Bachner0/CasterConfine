@@ -139,12 +139,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4caa2ae2e7e860f41bd5eca56436bfe5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetToFollow: {fileID: 0}
-  offsetFromPlayer: {x: 0, y: 0, z: 0}
-  zoomSpeed: 4
-  minZoom: 2
-  maxZoom: 15
-  pitch: 2
+  distance: 4
+  height: 1
+  smoothLag: 0.2
+  maxSpeed: 10
+  snapLag: 0.3
+  clampHeadPositionScreenSpace: 0.75
 --- !u!81 &368507796
 AudioListener:
   m_ObjectHideFlags: 0

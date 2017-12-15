@@ -90,7 +90,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\InRoomMapSettings.cs" />
     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\CustomTypes.cs" />
     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\Enums.cs" />
     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\Extensions.cs" />
@@ -169,6 +168,7 @@
     <Compile Include="Assets\Scripts\GameLogic.cs" />
     <Compile Include="Assets\Scripts\Generic\DDOL.cs" />
     <Compile Include="Assets\Scripts\Generic\RandomCode.cs" />
+    <Compile Include="Assets\Scripts\InRoomMapSettings.cs" />
     <Compile Include="Assets\Scripts\Lobby\LobbyCanvas.cs" />
     <Compile Include="Assets\Scripts\Lobby\RoomLayoutGroup.cs" />
     <Compile Include="Assets\Scripts\Lobby\RoomListing.cs" />
@@ -178,6 +178,7 @@
     <Compile Include="Assets\Scripts\Networks\PlayerNetwork.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\SelectObject.cs" />
+    <Compile Include="Assets\Scripts\SetupLocalPlayer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Photon Unity Networking\link.xml" />

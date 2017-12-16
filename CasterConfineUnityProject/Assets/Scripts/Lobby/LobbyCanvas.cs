@@ -22,6 +22,8 @@ public class LobbyCanvas : MonoBehaviour {
     private Dropdown MapSelection;
     [SerializeField]
     private Dropdown TimeLimit;
+    [SerializeField]
+    private Button KickPlayer;
 
 
 
@@ -35,6 +37,9 @@ public class LobbyCanvas : MonoBehaviour {
             PlayerCount.GetComponent<Dropdown>().interactable = true;
             MapSelection.GetComponent<Dropdown>().interactable = true;
             TimeLimit.GetComponent<Dropdown>().interactable = true;
+            KickPlayer.GetComponent<Button>().enabled = true;
+            KickPlayer.GetComponent<Button>().image.enabled = true;
+            KickPlayer.GetComponent<Button>().GetComponentInChildren<Text>().enabled = true;
         }
         else
         {
@@ -44,6 +49,9 @@ public class LobbyCanvas : MonoBehaviour {
             PlayerCount.GetComponent<Dropdown>().interactable = false;
             MapSelection.GetComponent<Dropdown>().interactable = false;
             TimeLimit.GetComponent<Dropdown>().interactable = false;
+            KickPlayer.GetComponent<Button>().enabled = false;
+            KickPlayer.GetComponent<Button>().image.enabled = false;
+            KickPlayer.GetComponent<Button>().GetComponentInChildren<Text>().enabled = false;
         }
     }
 

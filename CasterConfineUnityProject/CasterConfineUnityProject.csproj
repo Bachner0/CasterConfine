@@ -160,15 +160,17 @@
     <Compile Include="Assets\PhotonChatApi\ChatState.cs" />
     <Compile Include="Assets\PhotonChatApi\ChatUserStatus.cs" />
     <Compile Include="Assets\PhotonChatApi\IChatClientListener.cs" />
+    <Compile Include="Assets\Scripts\ArenaOne\GameLogic.cs" />
+    <Compile Include="Assets\Scripts\ArenaOne\PlayerMovement.cs" />
+    <Compile Include="Assets\Scripts\ArenaOne\SelectObject.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
-    <Compile Include="Assets\Scripts\CreateRoom.cs" />
     <Compile Include="Assets\Scripts\CurrentRoom\CurrentRoomCanvas.cs" />
+    <Compile Include="Assets\Scripts\CurrentRoom\InRoomMapSettings.cs" />
     <Compile Include="Assets\Scripts\CurrentRoom\PlayerLayoutGroup.cs" />
     <Compile Include="Assets\Scripts\CurrentRoom\PlayerListing.cs" />
-    <Compile Include="Assets\Scripts\GameLogic.cs" />
     <Compile Include="Assets\Scripts\Generic\DDOL.cs" />
     <Compile Include="Assets\Scripts\Generic\RandomCode.cs" />
-    <Compile Include="Assets\Scripts\InRoomMapSettings.cs" />
+    <Compile Include="Assets\Scripts\Lobby\CreateRoom.cs" />
     <Compile Include="Assets\Scripts\Lobby\LobbyCanvas.cs" />
     <Compile Include="Assets\Scripts\Lobby\RoomLayoutGroup.cs" />
     <Compile Include="Assets\Scripts\Lobby\RoomListing.cs" />
@@ -176,9 +178,9 @@
     <Compile Include="Assets\Scripts\MainMenu.cs" />
     <Compile Include="Assets\Scripts\Networks\LobbyNetwork.cs" />
     <Compile Include="Assets\Scripts\Networks\PlayerNetwork.cs" />
-    <Compile Include="Assets\Scripts\PlayerMovement.cs" />
-    <Compile Include="Assets\Scripts\SelectObject.cs" />
+    <Compile Include="Assets\Scripts\PlayerData.cs" />
     <Compile Include="Assets\Scripts\SetupLocalPlayer.cs" />
+    <Compile Include="Assets\Scripts\TeamSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Photon Unity Networking\link.xml" />

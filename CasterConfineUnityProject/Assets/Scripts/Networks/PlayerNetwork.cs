@@ -15,7 +15,7 @@ public class PlayerNetwork : MonoBehaviour {
         Instance = this;
         PhotonView = GetComponent<PhotonView>();
         //To identify people
-        PlayerName = "Matt#" + Random.Range(1000, 9999);
+        PlayerName = "Caster#" + Random.Range(1000, 9999);
 
 
         //determines how much to push the communication send rate of packets - will result in higher bandwidth if higher, but more accurate

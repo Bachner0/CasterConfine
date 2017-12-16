@@ -9,7 +9,7 @@ public class LobbyNetwork : MonoBehaviour {
     {
         print("Connecting to server");
 
-        PhotonNetwork.ConnectUsingSettings("0.0.0.0");  //could be used for connecting by version
+        PhotonNetwork.ConnectUsingSettings("0.0.0.1");  //could be used for connecting by version
 	}
 	
     private void OnConnectedToMaster()

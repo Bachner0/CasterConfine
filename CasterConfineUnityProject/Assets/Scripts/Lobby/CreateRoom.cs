@@ -42,7 +42,7 @@ PhotonNetwork.LoadLevel and PhotonNetwork.automaticallySyncScene = true will do 
 
         RoomName = RoomTitle + "\nPlayers: " + RoomPlayerCount + "   Zone: " + RoomMapName + "   Time Limit: " + RoomTimeLimit + "m";
 
-        RoomOptions roomOptions = new RoomOptions() { IsVisible = true, IsOpen = true, MaxPlayers = 2 };
+        RoomOptions roomOptions = new RoomOptions() { IsVisible = true, IsOpen = true, MaxPlayers = 14 };
 
         if (PhotonNetwork.CreateRoom(RoomName, roomOptions, TypedLobby.Default))        //tell photon to create the room
         {

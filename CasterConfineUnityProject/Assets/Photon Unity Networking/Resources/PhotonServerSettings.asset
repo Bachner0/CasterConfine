@@ -39,4 +39,5 @@ MonoBehaviour:
   - RPC_LoadedGameScene
   - RPC_LoadGameOthers
   - RPC_CreatePlayer
+  - TakeDamage
   DisableAutoOpenWizard: 1

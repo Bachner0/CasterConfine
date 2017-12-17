@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//This is on Canvas
+
+
 public class MainMPCanvasManager : MonoBehaviour
 {
 
@@ -20,8 +23,6 @@ public class MainMPCanvasManager : MonoBehaviour
     {
         get { return _currentRoomCanvas; }
     }
-
-
 
     private void Awake()
     {

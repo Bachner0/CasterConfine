@@ -20,7 +20,7 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 2}
-  m_MinSize: {x: 950, y: 300}
+  m_MinSize: {x: 950, y: 542}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &2
 MonoBehaviour:
@@ -288,14 +288,14 @@ MonoBehaviour:
     width: 1246
     height: 614
   m_SceneLighting: 1
-  lastFramingTime: 16745.636782046287
+  lastFramingTime: 325.79114071510423
   m_2DMode: 1
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 4.84, y: 2.52, z: -55.1}
+    m_Target: {x: 21.596811, y: -0.4456771, z: 90.59375}
     speed: 2
-    m_Value: {x: 4.84, y: 2.52, z: -55.1}
+    m_Value: {x: 21.596811, y: -0.4456771, z: 90.59375}
   m_RenderMode: 0
   m_ValidateTrueMetals: 0
   m_SceneViewState:
@@ -322,14 +322,14 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 131.87932
+    m_Target: 155.03102
     speed: 2
-    m_Value: 131.87932
+    m_Value: 155.03102
   m_Ortho:
     m_Target: 1
     speed: 2
     m_Value: 1
-  m_LastSceneViewRotation: {x: -0.08717229, y: 0.89959055, z: -0.21045254, w: -0.3726226}
+  m_LastSceneViewRotation: {x: 0.32401842, y: -0.5779933, z: 0.2677497, w: 0.6994612}
   m_LastSceneViewOrtho: 0
   m_ReplacementShader: {fileID: 0}
   m_ReplacementString: 
@@ -363,9 +363,9 @@ MonoBehaviour:
     height: 614
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 6c290000
-    m_LastClickedID: 10604
-    m_ExpandedIDs: e6fbffff000000005e270000e0270000462800000c2900006c290000822900001c2a0000
+    m_SelectedIDs: 
+    m_LastClickedID: 0
+    m_ExpandedIDs: 8c2afaff082bfaff102cfaff1c2cfaff282cfaffd848faff5449faff5c4afaff684afaff744afaff5a56faffd656faffde57faffea57fafff657faffaa85faff2686faff2e87faff3a87faff4687faff9a8dfaff168efaff1e8ffaff2a8ffaff368ffaffd825fbff5426fbff5c27fbff6827fbff7427fbff503dfbfffe5bfcff6ebafcff2e77fdff9c77fdffa478fdffb078fdffbc78fdfff47dfdff627efdff6a7ffdff767ffdff827ffdff8084fdffee84fdfff685fdff0286fdff0e86fdff6c91fdffd891fdffe092fdffec92fdfff892fdffd89ffdff46a0fdff4ea1fdff5aa1fdff66a1fdff08d2fdff86d2fdff8ed3fdff9ad3fdffa6d3fdffd2d7feffd8d7feffc8eeffff22f4ffffe6fbffff0000000036270000482700005e270000ac2800006c290000782900001c2a00000a32000020320000823300002e340000de340000763d0000483e0000d47300000e7600004aa200005ca2000072a20000e2a2000034a30000daa30000eea30000aca400007ea500002cc3000054c30000c4c300000cc400007ac50000b8c50000e0e0000034e2000006e3000090ec0000b6ee00008aef0000d2fb0000f8fd000082070100ea080100a80901007c0a0100441a0100c21b0100801c0100541d0100
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -527,18 +527,18 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Scripts/CurrentRoom
+    - Assets/Prefabs
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Scripts/CurrentRoom
+  - Assets/Prefabs
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Users\Mattdawg\Documents\CasterConfine\CasterConfine\CasterConfineUnityProject
   m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 114}
-    m_SelectedIDs: 8c260000
-    m_LastClickedID: 9868
+    m_SelectedIDs: 26260000
+    m_LastClickedID: 9766
     m_ExpandedIDs: 000000009a250000d8250000f02500004626000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0

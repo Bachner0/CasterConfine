@@ -55,6 +55,7 @@ public class RoomLayoutGroup : MonoBehaviour
         if (index != -1)
         {
             RoomListing roomListing = RoomListingButtons[index];    //pull it from the index that it found earlier
+            Debug.Log(room.Name);
             roomListing.SetRoomNameText(room.Name);                 //update the name, it may have changed
             roomListing.Updated = true;
         }

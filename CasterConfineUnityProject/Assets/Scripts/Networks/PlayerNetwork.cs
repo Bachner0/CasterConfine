@@ -15,7 +15,7 @@ public class PlayerNetwork : MonoBehaviour {
         Instance = this;
         PhotonView = GetComponent<PhotonView>();
         //To identify people
-        PlayerName = "Caster#" + Random.Range(1000, 9999);
+        PlayerName = "Caster #" + Random.Range(1000, 9999);
 
 
         //determines how much to push the communication send rate of packets - will result in higher bandwidth if higher, but more accurate
@@ -26,6 +26,7 @@ public class PlayerNetwork : MonoBehaviour {
         SceneManager.sceneLoaded += OnSceneFinishedLoading;     //creates a delegate the occurs when a scene is loaded that calls the below method.
 	}
 	
+        
     private void OnSceneFinishedLoading(Scene scene, LoadSceneMode mode)
     {
         //check to see if player is master or not

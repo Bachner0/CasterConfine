@@ -25,15 +25,13 @@ public class PlayerLayoutGroup : MonoBehaviour, ISelectHandler, IDeselectHandler
     [SerializeField]
     private Button StartMatchButton;
     [SerializeField]
-    private InputField RoomTitleField;
-    [SerializeField]
-    private Button TitleSet;
-    [SerializeField]
     private Dropdown PlayerCount;
     [SerializeField]
     private Dropdown MapSelection;
     [SerializeField]
     private Dropdown TimeLimit;
+    [SerializeField]
+    private Dropdown Spectators;
     [SerializeField]
     private Button KickPlayer;
 
@@ -122,11 +120,10 @@ public class PlayerLayoutGroup : MonoBehaviour, ISelectHandler, IDeselectHandler
     public void ResetRoomOptionsPermissions()
     {
         StartMatchButton.interactable = true;
-        RoomTitleField.interactable = true;
-        TitleSet.interactable = true;
         PlayerCount.interactable = true;
         MapSelection.interactable = true;
         TimeLimit.interactable = true;
+        Spectators.interactable = true;
         KickPlayer.enabled = true;
         KickPlayer.image.enabled = true;
         KickPlayer.GetComponentInChildren<Text>().enabled = true;

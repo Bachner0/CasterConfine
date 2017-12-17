@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerData : Photon.MonoBehaviour
+public class PlayerData : Photon.PunBehaviour
 {
 
     public float health = 350f;

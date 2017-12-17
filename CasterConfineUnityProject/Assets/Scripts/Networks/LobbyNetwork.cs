@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//This is on a blank game object called LobbyNetwork
+
+
 public class LobbyNetwork : MonoBehaviour {
 
 	// Use this for initialization

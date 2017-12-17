@@ -6,45 +6,66 @@ using UnityEngine.UI;
 public class CreateRoom : MonoBehaviour
 {
 
-    private string RoomName;
-
-    public string RoomTitle;
-    public int RoomPlayerCount;
-    public string RoomMapName;
-    public int RoomTimeLimit;
-    //private bool RoomSpectators;
-
-
-
-
+    [SerializeField]
+    private Text _roomName;
+    private Text RoomName
+    {
+        get { return _roomName; }
+    }
 
     public void OnClick_CreateRoom()
     {
-        //Default room settings
-        //Name: Relic Spire #random
-        //PlayerCount: 2 (1v1)
-        //Map: ArenaOne
-        //TimeLimit: 10 mins
-        //AllowSpectators: false
-        RoomTitle = "Relic Spire #" + Random.Range(1000, 9999);
-        RoomPlayerCount = 2;
-        RoomMapName = "ArenaOne";
-        RoomTimeLimit = 10;
+        //RoomName = "Relic Spire #" + Random.Range(10, 9999);
 
+        //RoomOptions roomOptions = new RoomOptions() { IsVisible = true, IsOpen = true, MaxPlayers = 14 };
+
+
+        //this gives key conflict error
         /*
-         * Making the room invisible is a good way to hide it from randomly joining players, yes.
-You shouldn't change the room's name though. It's the ID by which we find and handle the room.
-Better: Use a room property to store the current scenery name. The props are available for new players before events come in, so you can pause the message queue and load the scenery, before you turn on the queue again when you loaded.
-PhotonNetwork.LoadLevel and PhotonNetwork.automaticallySyncScene = true will do this for you, too.
-*/
+        ExitGames.Client.Photon.Hashtable CustomRoomOpts = new ExitGames.Client.Photon.Hashtable();
+
+        
+        roomOptions.CustomRoomProperties.Add(RoomProperty.RoomNameTitle, RoomName);
+        roomOptions.CustomRoomProperties.Add(RoomProperty.GameMode, "Teams");
+        roomOptions.CustomRoomProperties.Add(RoomProperty.Map, "ArenaOne");
+        roomOptions.CustomRoomProperties.Add(RoomProperty.MapIndex, 1);
+        roomOptions.CustomRoomProperties.Add(RoomProperty.TimeLimit, "Ten");
+        roomOptions.CustomRoomProperties.Add(RoomProperty.SpectatorsSetting, "Allowed");
+        roomOptions.CustomRoomProperties.Add(RoomProperty.TeamAScore, 0);
+        roomOptions.CustomRoomProperties.Add(RoomProperty.TeamBScore, 0);
+
+        roomOptions.CustomRoomPropertiesForLobby = new string[]
+        {
+            RoomProperty.RoomNameTitle,
+            RoomProperty.GameMode
+        };
+        */
 
 
-
-        RoomName = RoomTitle + "\nPlayers: " + RoomPlayerCount + "   Zone: " + RoomMapName + "   Time Limit: " + RoomTimeLimit + "m";
-
-        RoomOptions roomOptions = new RoomOptions() { IsVisible = true, IsOpen = true, MaxPlayers = 14 };
-
-        if (PhotonNetwork.CreateRoom(RoomName, roomOptions, TypedLobby.Default))        //tell photon to create the room
+        //tell photon to create the room
+        if (PhotonNetwork.CreateRoom(RoomName.text, new RoomOptions()
+        {
+            //Don't think we need this because we're transfering the info through the text stuff
+            //CustomRoomPropertiesForLobby = new string[]
+            //{
+            //    RoomProperty.RoomNameTitle,
+            //    RoomProperty.GameMode
+            //},
+            CustomRoomProperties = new ExitGames.Client.Photon.Hashtable
+            {
+                { RoomProperty.GameMode, "Teams"},
+                { RoomProperty.Map, "ArenaOne"},
+                { RoomProperty.MapIndex, 1},
+                { RoomProperty.TimeLimit, "Ten"},
+                { RoomProperty.SpectatorsSetting, "Allowed"},
+                { RoomProperty.TeamAScore, 0},
+                { RoomProperty.TeamBScore, 0}
+            },
+            IsVisible = true,
+            IsOpen = true,
+            MaxPlayers = 14
+            },
+            TypedLobby.Default))        
         {
             print("Create room successfully sent");
         }
@@ -64,7 +85,16 @@ PhotonNetwork.LoadLevel and PhotonNetwork.automaticallySyncScene = true will do 
         print("Room created successfully");
     }
 
+}
 
-
+public class RoomProperty
+{
+    public const string GameMode = "GM";
+    public const string Map = "MP";
+    public const string MapIndex = "MI";
+    public const string TimeLimit = "TL";
+    public const string SpectatorsSetting = "SS";
+    public const string TeamAScore = "AS";
+    public const string TeamBScore = "BS";
 
 }

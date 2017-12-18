@@ -15,33 +15,6 @@ public class CreateRoom : MonoBehaviour
 
     public void OnClick_CreateRoom()
     {
-        //RoomName = "Relic Spire #" + Random.Range(10, 9999);
-
-        //RoomOptions roomOptions = new RoomOptions() { IsVisible = true, IsOpen = true, MaxPlayers = 14 };
-
-
-        //this gives key conflict error
-        /*
-        ExitGames.Client.Photon.Hashtable CustomRoomOpts = new ExitGames.Client.Photon.Hashtable();
-
-        
-        roomOptions.CustomRoomProperties.Add(RoomProperty.RoomNameTitle, RoomName);
-        roomOptions.CustomRoomProperties.Add(RoomProperty.GameMode, "Teams");
-        roomOptions.CustomRoomProperties.Add(RoomProperty.Map, "ArenaOne");
-        roomOptions.CustomRoomProperties.Add(RoomProperty.MapIndex, 1);
-        roomOptions.CustomRoomProperties.Add(RoomProperty.TimeLimit, "Ten");
-        roomOptions.CustomRoomProperties.Add(RoomProperty.SpectatorsSetting, "Allowed");
-        roomOptions.CustomRoomProperties.Add(RoomProperty.TeamAScore, 0);
-        roomOptions.CustomRoomProperties.Add(RoomProperty.TeamBScore, 0);
-
-        roomOptions.CustomRoomPropertiesForLobby = new string[]
-        {
-            RoomProperty.RoomNameTitle,
-            RoomProperty.GameMode
-        };
-        */
-
-
         //tell photon to create the room
         if (PhotonNetwork.CreateRoom(RoomName.text, new RoomOptions()
         {
@@ -53,11 +26,10 @@ public class CreateRoom : MonoBehaviour
             //},
             CustomRoomProperties = new ExitGames.Client.Photon.Hashtable
             {
-                { RoomProperty.GameMode, "Teams"},
-                { RoomProperty.Map, "ArenaOne"},
-                { RoomProperty.MapIndex, 1},
-                { RoomProperty.TimeLimit, "Ten"},
-                { RoomProperty.SpectatorsSetting, "Allowed"},
+                { RoomProperty.GameMode, 0},
+                { RoomProperty.MapLevel, 1},
+                { RoomProperty.TimeLimit, 2},
+                { RoomProperty.SpectatorsSetting, 0},
                 { RoomProperty.TeamAScore, 0},
                 { RoomProperty.TeamBScore, 0}
             },
@@ -89,12 +61,11 @@ public class CreateRoom : MonoBehaviour
 
 public class RoomProperty
 {
-    public const string GameMode = "GM";
-    public const string Map = "MP";
-    public const string MapIndex = "MI";
-    public const string TimeLimit = "TL";
-    public const string SpectatorsSetting = "SS";
-    public const string TeamAScore = "AS";
-    public const string TeamBScore = "BS";
+    public const string GameMode = "G";
+    public const string MapLevel = "M";
+    public const string TimeLimit = "T";
+    public const string SpectatorsSetting = "S";
+    public const string TeamAScore = "A";
+    public const string TeamBScore = "B";
 
 }

@@ -119,6 +119,7 @@ public class PlayerLayoutGroup : MonoBehaviour, ISelectHandler, IDeselectHandler
 
     public void ResetRoomOptionsPermissions()
     {
+        // the false settings are in LobbyCanvas
         StartMatchButton.interactable = true;
         PlayerCount.interactable = true;
         MapSelection.interactable = true;
@@ -127,6 +128,10 @@ public class PlayerLayoutGroup : MonoBehaviour, ISelectHandler, IDeselectHandler
         KickPlayer.enabled = true;
         KickPlayer.image.enabled = true;
         KickPlayer.GetComponentInChildren<Text>().enabled = true;
+        PlayerCount.value = 0;
+        MapSelection.value = 0;
+        TimeLimit.value = 0;
+        Spectators.value = 0;
     }
 
 

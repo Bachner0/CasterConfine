@@ -29,14 +29,15 @@ public class LobbyCanvas : MonoBehaviour {
     {
         if (!PhotonNetwork.isMasterClient)      //can't click if not host
         {
-            StartMatchButton.GetComponent<Button>().interactable = false;
-            PlayerCount.GetComponent<Dropdown>().interactable = false;
-            MapSelection.GetComponent<Dropdown>().interactable = false;
-            TimeLimit.GetComponent<Dropdown>().interactable = false;
-            Spectators.GetComponent<Dropdown>().interactable = false;
-            KickPlayer.GetComponent<Button>().enabled = false;
-            KickPlayer.GetComponent<Button>().image.enabled = false;
-            KickPlayer.GetComponent<Button>().GetComponentInChildren<Text>().enabled = false;
+            // the true settings are in PlayerLayoutGroup
+            StartMatchButton.enabled = false;
+            PlayerCount.enabled = false;
+            MapSelection.enabled = false;
+            TimeLimit.enabled = false;
+            Spectators.enabled = false;
+            KickPlayer.enabled = false;
+            KickPlayer.image.enabled = false;
+            KickPlayer.GetComponentInChildren<Text>().enabled = false;
         }
         return;
     }

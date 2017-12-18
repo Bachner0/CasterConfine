@@ -40,4 +40,5 @@ MonoBehaviour:
   - RPC_LoadGameOthers
   - RPC_CreatePlayer
   - TakeDamage
+  - RPC_NewHealth
   DisableAutoOpenWizard: 1

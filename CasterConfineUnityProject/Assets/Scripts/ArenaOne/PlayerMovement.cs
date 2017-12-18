@@ -14,6 +14,9 @@ public class PlayerMovement : Photon.MonoBehaviour              //added photon. 
     public Transform target;                    // from old script... for player selecting a target. does it go here?
     Camera playerCam;
     */
+
+    public float Health;
+
     
     private float incSpeed = 12.0f;
     private float rotSpeed = 120.0f;

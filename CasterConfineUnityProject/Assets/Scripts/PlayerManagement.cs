@@ -12,6 +12,7 @@ public class PlayerManagement : MonoBehaviour {
 
 
 
+
     private void Awake()
     {
         Instance = this;    //all singletons do this

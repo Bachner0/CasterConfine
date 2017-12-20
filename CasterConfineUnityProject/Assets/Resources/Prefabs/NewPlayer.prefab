@@ -42,6 +42,8 @@ GameObject:
   - component: {fileID: 114801897085005826}
   - component: {fileID: 114060999210472500}
   - component: {fileID: 114222489797435672}
+  - component: {fileID: 114177642329568870}
+  - component: {fileID: 114417269146905260}
   m_Layer: 8
   m_Name: NewPlayer
   m_TagString: Untagged
@@ -226,6 +228,27 @@ MonoBehaviour:
   selectionMask:
     serializedVersion: 2
     m_Bits: 256
+--- !u!114 &114177642329568870
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1688523174868356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4caa2ae2e7e860f41bd5eca56436bfe5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distance: 7
+  height: 4
+  heightSmoothLag: 0.3
+  centerOffset: {x: 0, y: 0, z: 0}
+  distanceUp: 2
+  followOnStart: 0
+  camSmoothDampTime: 0.1
+  zoomSpeed: 4
+  minZoom: 2
+  maxZoom: 15
 --- !u!114 &114222489797435672
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -252,6 +275,17 @@ MonoBehaviour:
   instantiationId: -1
   currentMasterID: -1
   isRuntimeInstantiated: 0
+--- !u!114 &114417269146905260
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1688523174868356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a8e04fe305ae1b4b86c8a08fbd3c37c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114801897085005826
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -12,6 +12,7 @@ public class PlayerNetwork : MonoBehaviour {
     private PlayerMovement CurrentPlayer;   //this is our reference to the player to destroy on death
     //private Coroutine m_pingCoroutine;
 
+
     // Use this for initialization
     private void Awake ()
     {
@@ -123,7 +124,7 @@ public class PlayerNetwork : MonoBehaviour {
         //creating the player. the vector3 is the location, then rotation, and last setting is for group... not sure what that is
         GameObject obj = PhotonNetwork.Instantiate(Path.Combine("Prefabs", "NewPlayer"), Vector3.zero, Quaternion.identity, 0);
         CurrentPlayer = obj.GetComponent<PlayerMovement>();
-
+        //OnStartFollowing();  //this is for the camera
     }
 
 }

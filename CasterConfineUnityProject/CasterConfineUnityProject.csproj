@@ -160,10 +160,7 @@
     <Compile Include="Assets\PhotonChatApi\ChatState.cs" />
     <Compile Include="Assets\PhotonChatApi\ChatUserStatus.cs" />
     <Compile Include="Assets\PhotonChatApi\IChatClientListener.cs" />
-    <Compile Include="Assets\Scripts\ArenaOne\GameLogic.cs" />
-    <Compile Include="Assets\Scripts\ArenaOne\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\ArenaOne\SelectObject.cs" />
-    <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\CurrentRoom\CurrentRoomCanvas.cs" />
     <Compile Include="Assets\Scripts\CurrentRoom\InRoomMapSettings.cs" />
     <Compile Include="Assets\Scripts\CurrentRoom\PlayerLayoutGroup.cs" />
@@ -180,6 +177,9 @@
     <Compile Include="Assets\Scripts\Networks\PlayerNetwork.cs" />
     <Compile Include="Assets\Scripts\PlayerData.cs" />
     <Compile Include="Assets\Scripts\PlayerManagement.cs" />
+    <Compile Include="Assets\Scripts\PlayerScripts\CameraController.cs" />
+    <Compile Include="Assets\Scripts\PlayerScripts\NewPlayerSettings.cs" />
+    <Compile Include="Assets\Scripts\PlayerScripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\SetupLocalPlayer.cs" />
     <Compile Include="Assets\Scripts\TeamSettings.cs" />
     <Compile Include="Assets\Scripts\ToxicArea.cs" />

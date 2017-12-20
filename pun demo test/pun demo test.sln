@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2017
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pun demo test.Plugins", "pun demo test.Plugins.csproj", "{AB499242-3BF5-F3EF-B661-151824C977A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pun demo test", "pun demo test.csproj", "{ECE419F6-1F15-1B27-926A-95ECC6A38501}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pun demo test.Editor", "pun demo test.Editor.csproj", "{C99A36C3-4EF7-9F2C-D2BA-E414A389F710}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AB499242-3BF5-F3EF-B661-151824C977A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB499242-3BF5-F3EF-B661-151824C977A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB499242-3BF5-F3EF-B661-151824C977A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB499242-3BF5-F3EF-B661-151824C977A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECE419F6-1F15-1B27-926A-95ECC6A38501}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECE419F6-1F15-1B27-926A-95ECC6A38501}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECE419F6-1F15-1B27-926A-95ECC6A38501}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECE419F6-1F15-1B27-926A-95ECC6A38501}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C99A36C3-4EF7-9F2C-D2BA-E414A389F710}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C99A36C3-4EF7-9F2C-D2BA-E414A389F710}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C99A36C3-4EF7-9F2C-D2BA-E414A389F710}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C99A36C3-4EF7-9F2C-D2BA-E414A389F710}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

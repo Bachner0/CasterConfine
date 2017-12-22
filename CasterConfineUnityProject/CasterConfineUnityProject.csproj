@@ -181,6 +181,8 @@
     <Compile Include="Assets\Scripts\PlayerScripts\NewPlayerSettings.cs" />
     <Compile Include="Assets\Scripts\PlayerScripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\SetupLocalPlayer.cs" />
+    <Compile Include="Assets\Scripts\Spells\Spell.cs" />
+    <Compile Include="Assets\Scripts\Spells\SpellManager.cs" />
     <Compile Include="Assets\Scripts\TeamSettings.cs" />
     <Compile Include="Assets\Scripts\ToxicArea.cs" />
   </ItemGroup>

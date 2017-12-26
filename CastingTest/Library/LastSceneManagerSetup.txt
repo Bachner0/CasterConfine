@@ -1,4 +1,0 @@
-sceneSetups:
-- path: Assets/CombatZone.unity
-  isLoaded: 1
-  isActive: 1

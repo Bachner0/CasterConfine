@@ -22,7 +22,7 @@ public class SpellCreator : EditorWindow
 
     private void OnGUI()
     {
-        if(spellManager = null)
+        if(spellManager == null)
         {
             spellManager = GameObject.Find("SpellManager").GetComponent<SpellManager>();
         }

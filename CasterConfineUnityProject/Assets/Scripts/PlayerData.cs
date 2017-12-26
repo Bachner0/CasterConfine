@@ -11,7 +11,7 @@ public class PlayerData : Photon.PunBehaviour
     //Use for initialization
     private void Start()
     {
-        currentHitPoints = currentHitPoints;
+        currentHitPoints = currentHitPoints;            //something wrong here? 
     }
 
     [PunRPC]

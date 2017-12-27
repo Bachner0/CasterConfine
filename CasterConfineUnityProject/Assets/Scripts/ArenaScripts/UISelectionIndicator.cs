@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+//i can't get this to work.
+
+    /*
 public class UISelectionIndicator : MonoBehaviour {
 
     MouseManager mm;
@@ -38,7 +41,7 @@ public class UISelectionIndicator : MonoBehaviour {
     }
 
     static Vector3[] screenSpaceCorners;
-    static Rect RendererBoundsInScreenSpace(Renderer r)
+    static private Rect RendererBoundsInScreenSpace(Renderer r)
     {
         // This is the space occupied by the object's visuals
         // in WORLD space.
@@ -90,6 +93,7 @@ public class UISelectionIndicator : MonoBehaviour {
 
     }
 }
+*/
 
 /*          Couldn't get this to work, so trying just triangle above head
 using UnityEngine;

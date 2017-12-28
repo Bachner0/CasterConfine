@@ -1,14 +1,25 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+//I also want name and health bar updated here above the rect transform
+//  -the name will be grabbed by the photon name for a text box
+//  -the health bar will update with a listener on when the target health changes
+//
+
 public class UISelectionIndicator : MonoBehaviour {
 
     MouseManager mm;
+    float minPadding;
+    float maxPadding;
+    RectTransform rt;
 
     // Use this for initialization
     void Start()
     {
         mm = GameObject.FindObjectOfType<MouseManager>();
+        rt = GetComponent<RectTransform>();
+        minPadding = 14f;
+        maxPadding = 28f;
     }
 
     private void Update()
@@ -19,13 +30,11 @@ public class UISelectionIndicator : MonoBehaviour {
             {
                 this.transform.GetChild(i).gameObject.SetActive(true);
             }
-            Rect visualRect = RendererBoundsInScreenSpace(mm.selectedObject.GetComponentInChildren<Renderer>());
+            Rect visualRect = RendererBoundsInScreenSpace(mm.selectedObjectRenderer);
 
-            RectTransform rt = GetComponent<RectTransform>();
+            rt.position = new Vector2(visualRect.xMin - minPadding, visualRect.yMin - minPadding);
 
-            rt.position = new Vector2(visualRect.xMin, visualRect.yMin);
-
-            rt.sizeDelta = new Vector2(visualRect.width, visualRect.height);
+            rt.sizeDelta = new Vector2(visualRect.width + maxPadding, visualRect.height + maxPadding);
 
         }
         else
@@ -38,7 +47,7 @@ public class UISelectionIndicator : MonoBehaviour {
     }
 
     static Vector3[] screenSpaceCorners;
-    static Rect RendererBoundsInScreenSpace(Renderer r)
+    static private Rect RendererBoundsInScreenSpace(Renderer r)
     {
         // This is the space occupied by the object's visuals
         // in WORLD space.
@@ -90,114 +99,3 @@ public class UISelectionIndicator : MonoBehaviour {
 
     }
 }
-
-/*          Couldn't get this to work, so trying just triangle above head
-using UnityEngine;
-using UnityEngine.UI;
-
-public class UISelectionIndicator : MonoBehaviour {
-
-    MouseManager mm;
-    Camera mainCamera;
-
-    // Use this for initialization
-    void Start()
-    {
-        mm = GameObject.FindObjectOfType<MouseManager>();
-        mainCamera = Camera.main;
-    }
-
-    Vector3 _Center;
-    Vector3 _UpperLeft;
-    Vector3 _LowerRight;
-
-    public RectTransform rt;
-
-    private void Update()
-    {
-        if (mm.selectedObject != null)
-        {
-            for (int i = 0; i < this.transform.childCount; i++)
-            {
-                this.transform.GetChild(i).gameObject.SetActive(true);
-            }
-
-            Rect visualRect = GetScreenRect(mm.selectedObject.GetComponentInChildren<Collider>());
-
-            //RectTransform rt = GetComponent<RectTransform>();
-
-            Debug.Log("min x" + visualRect.xMin + " min y" + visualRect.yMin);
-            Debug.Log("width" + visualRect.width + " height" + visualRect.height);
-
-            //        return new Rect(min.x, min.y, max.x - min.x, max.y - min.y);
-            rt.position = new Vector2(visualRect.xMin, visualRect.yMin);
-
-            rt.sizeDelta = new Vector2(visualRect.width, visualRect.height);
-        }
-        else
-        {
-            for (int i = 0; i < this.transform.childCount; i++)
-            {
-                this.transform.GetChild(i).gameObject.SetActive(false);
-            }
-        }
-    }
-
-
-
-    public static Rect GetScreenRect(Collider collider)
-    {
-        Vector3 cen = collider.bounds.center;
-        Vector3 ext = collider.bounds.extents;
-        Camera cam = Camera.main;
-        float screenheight = Screen.height;
-
-        Vector2 min = cam.WorldToScreenPoint(new Vector3(cen.x - ext.x, cen.y - ext.y, cen.z - ext.z));
-        Vector2 max = min;
-
-
-        //0
-        Vector2 point = min;
-        min = new Vector2(min.x >= point.x ? point.x : min.x, min.y >= point.y ? point.y : min.y);
-        max = new Vector2(max.x <= point.x ? point.x : max.x, max.y <= point.y ? point.y : max.y);
-
-        //1
-        point = cam.WorldToScreenPoint(new Vector3(cen.x + ext.x, cen.y - ext.y, cen.z - ext.z));
-        min = new Vector2(min.x >= point.x ? point.x : min.x, min.y >= point.y ? point.y : min.y);
-        max = new Vector2(max.x <= point.x ? point.x : max.x, max.y <= point.y ? point.y : max.y);
-
-
-        //2
-        point = cam.WorldToScreenPoint(new Vector3(cen.x - ext.x, cen.y - ext.y, cen.z + ext.z));
-        min = new Vector2(min.x >= point.x ? point.x : min.x, min.y >= point.y ? point.y : min.y);
-        max = new Vector2(max.x <= point.x ? point.x : max.x, max.y <= point.y ? point.y : max.y);
-
-        //3
-        point = cam.WorldToScreenPoint(new Vector3(cen.x + ext.x, cen.y - ext.y, cen.z + ext.z));
-        min = new Vector2(min.x >= point.x ? point.x : min.x, min.y >= point.y ? point.y : min.y);
-        max = new Vector2(max.x <= point.x ? point.x : max.x, max.y <= point.y ? point.y : max.y);
-
-        //4
-        point = cam.WorldToScreenPoint(new Vector3(cen.x - ext.x, cen.y + ext.y, cen.z - ext.z));
-        min = new Vector2(min.x >= point.x ? point.x : min.x, min.y >= point.y ? point.y : min.y);
-        max = new Vector2(max.x <= point.x ? point.x : max.x, max.y <= point.y ? point.y : max.y);
-
-        //5
-        point = cam.WorldToScreenPoint(new Vector3(cen.x + ext.x, cen.y + ext.y, cen.z - ext.z));
-        min = new Vector2(min.x >= point.x ? point.x : min.x, min.y >= point.y ? point.y : min.y);
-        max = new Vector2(max.x <= point.x ? point.x : max.x, max.y <= point.y ? point.y : max.y);
-
-        //6
-        point = cam.WorldToScreenPoint(new Vector3(cen.x - ext.x, cen.y + ext.y, cen.z + ext.z));
-        min = new Vector2(min.x >= point.x ? point.x : min.x, min.y >= point.y ? point.y : min.y);
-        max = new Vector2(max.x <= point.x ? point.x : max.x, max.y <= point.y ? point.y : max.y);
-
-        //7
-        point = cam.WorldToScreenPoint(new Vector3(cen.x + ext.x, cen.y + ext.y, cen.z + ext.z));
-        min = new Vector2(min.x >= point.x ? point.x : min.x, min.y >= point.y ? point.y : min.y);
-        max = new Vector2(max.x <= point.x ? point.x : max.x, max.y <= point.y ? point.y : max.y);
-
-        return new Rect(min.x, min.y, max.x - min.x, max.y - min.y);
-    }
-}
-*/

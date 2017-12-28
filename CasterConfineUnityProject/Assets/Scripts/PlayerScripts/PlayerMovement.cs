@@ -80,8 +80,12 @@ public class PlayerMovement : Photon.MonoBehaviour              //added photon. 
         mHash.Add("zxdX", "arcoutleft");
         mHash.Add("zwaW", "arcbackleft");
         mHash.Add("zxaX", "arcbackleft");
-        mHash.Add("wd", "interruptright");
-        mHash.Add("wa", "interruptleft");
+        mHash.Add("wd", "interruptright");  //this isn't exactly right
+        mHash.Add("wa", "interruptleft");   //this isn't exactly right
+        mHash.Add("zawW", "extremeturnleft");
+        mHash.Add("cdwW", "extremeturnright");
+        mHash.Add("zaw", "wideanglediagforwardleft");
+        mHash.Add("cdw", "wideanglediagforwardright");
 
     }
 
@@ -166,6 +170,7 @@ public class PlayerMovement : Photon.MonoBehaviour              //added photon. 
         {
             if (mList.Count > 3) mList.Remove('w');
             if (mList.Count > 3) mList.Remove('x');
+            if (mList.Count > 3) mList.Remove('X');
             mList.Remove('X');
             mList.AddLast('X');
         }
@@ -196,6 +201,7 @@ public class PlayerMovement : Photon.MonoBehaviour              //added photon. 
         {
             if (mList.Count > 3) mList.Remove('w');
             if (mList.Count > 3) mList.Remove('x');
+            if (mList.Count > 3) mList.Remove('X');
             mList.Remove('X');
             mList.AddLast('X');
         }
@@ -213,7 +219,7 @@ public class PlayerMovement : Photon.MonoBehaviour              //added photon. 
         if (Input.GetKeyDown(KeyCode.C))
         {
             if (mList.Count > 3) mList.Remove('w');
-            if (mList.Count > 2) mList.Remove('x');     // revist, maybe remove
+            if (mList.Count > 2) mList.Remove('x');     // was causing backwards movement
             mList.Remove('c');
             mList.AddLast('c');
         }
@@ -224,7 +230,7 @@ public class PlayerMovement : Photon.MonoBehaviour              //added photon. 
         if (Input.GetKeyDown(KeyCode.A))
         {
             if (mList.Count > 3) mList.Remove('W');
-            if (mList.Count > 2) mList.Remove('X');     // revist, maybe remove
+            //if (mList.Count > 2) mList.Remove('X');     // was causing backwards movement
             mList.Remove('a');
             mList.AddLast('a');
         }
@@ -235,7 +241,7 @@ public class PlayerMovement : Photon.MonoBehaviour              //added photon. 
         if (Input.GetKeyDown(KeyCode.D))
         {
             if (mList.Count > 3) mList.Remove('W');
-            if (mList.Count > 2) mList.Remove('X');     // revist, maybe remove
+            //if (mList.Count > 2) mList.Remove('X');     // was causing backwards movement
             mList.Remove('d');
             mList.AddLast('d');
         }
@@ -245,8 +251,8 @@ public class PlayerMovement : Photon.MonoBehaviour              //added photon. 
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            if (mList.Count > 3) mList.Remove('W');     // revist, maybe remove
-            if (mList.Count > 2) mList.Remove('X');
+            if (mList.Count > 3) mList.Remove('W');
+            //if (mList.Count > 2) mList.Remove('X');   // was causing backwards movement
             mList.Remove('a');
             mList.AddLast('a');
         }
@@ -256,8 +262,8 @@ public class PlayerMovement : Photon.MonoBehaviour              //added photon. 
         }
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            if (mList.Count > 3) mList.Remove('W');     // revist, maybe remove
-            if (mList.Count > 2) mList.Remove('X');
+            if (mList.Count > 3) mList.Remove('W');
+            //if (mList.Count > 2) mList.Remove('X');     // revist, maybe remove
             mList.Remove('d');
             mList.AddLast('d');
         }
@@ -354,6 +360,29 @@ public class PlayerMovement : Photon.MonoBehaviour              //added photon. 
                 transform.position += transform.right * slidePower * Time.deltaTime;
                 transform.Rotate(Vector3.down * rotSpeed * Time.deltaTime);
             }
+            //new 12/26/17
+            else if (items == "extremeturnleft")
+            {
+                transform.position += -transform.right * slidePower / 2 * Time.deltaTime;
+                transform.Rotate(Vector3.down * rotSpeed * Time.deltaTime * 2);
+            }
+            else if (items == "extremeturnright")
+            {
+                transform.position += transform.right * slidePower / 2 * Time.deltaTime;
+                transform.Rotate(Vector3.up * rotSpeed * Time.deltaTime * 2);
+            }
+
+            else if (items == "wideanglediagforwardleft")
+            {
+                transform.position += transform.forward * incSpeed * Time.deltaTime;
+                transform.position += (-transform.right * 2) * incSpeed * redSpeed * Time.deltaTime;
+            }
+            else if (items == "wideanglediagforwardright")
+            {
+                transform.position += transform.forward * incSpeed * Time.deltaTime;
+                transform.position += (transform.right * 2) * incSpeed * redSpeed * Time.deltaTime;
+            }
+
             else if (items == "Idle") { mList.Clear(); }
             else if (items == "dump") { mList.Clear(); }
         }

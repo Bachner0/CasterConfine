@@ -2,17 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MouseManager : MonoBehaviour {
+// Make it so you can't select self
+
+
+
+
+public class MouseManager : MonoBehaviour
+{
 
     public LayerMask selectionMask; //for defining what layers to register selection on
     Camera playerCamera;
     public GameObject selectedObject;   //to store what was selected
+    public Renderer selectedObjectRenderer;
 
     // Use this for initialization
     void Start ()
     {
         playerCamera = Camera.main;
         selectedObject = null;
+        selectedObjectRenderer = null;
 	}
 	
 	// Update is called once per frame
@@ -64,6 +72,7 @@ public class MouseManager : MonoBehaviour {
             ClearSelection();
         }
         selectedObject = obj;
+        selectedObjectRenderer = selectedObject.GetComponentInChildren<Renderer>();
     }
 
     //If we wanted to deselect in some way. maybe use this when gameobject (player) is destroyed?

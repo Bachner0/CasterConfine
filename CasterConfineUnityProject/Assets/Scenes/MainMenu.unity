@@ -243,9 +243,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'options
-
-'
+  m_Text: Preferences
 --- !u!222 &216178552
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -485,7 +483,7 @@ GameObject:
   - component: {fileID: 473564413}
   - component: {fileID: 473564412}
   m_Layer: 5
-  m_Name: SingleplayerButton
+  m_Name: MultiplayerButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -550,7 +548,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 917223660}
-        m_MethodName: PlayerSingleplayerGame
+        m_MethodName: MultiplayerGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -727,7 +725,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: multiplayer
+  m_Text: 'Customize
+
+'
 --- !u!222 &655305833
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1570,9 +1570,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'quit
-
-'
+  m_Text: Quit
 --- !u!222 &1369692648
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1914,7 +1912,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'singleplayer
+  m_Text: 'Play
 
 '
 --- !u!222 &1909143827
@@ -2092,7 +2090,7 @@ GameObject:
   - component: {fileID: 2080084533}
   - component: {fileID: 2080084532}
   m_Layer: 5
-  m_Name: MultiplayerButton
+  m_Name: CustomizeButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2155,18 +2153,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2080084533}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 917223660}
-        m_MethodName: MultiplayerGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &2080084533

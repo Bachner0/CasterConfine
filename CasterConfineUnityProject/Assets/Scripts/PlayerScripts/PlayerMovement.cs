@@ -20,8 +20,10 @@ public class PlayerMovement : Photon.MonoBehaviour              //added photon. 
     
     private float incSpeed = 12.0f;
     private float rotSpeed = 120.0f;
-    private float redSpeed = 0.45f;
-    private float slidePower = 20.0f;
+    private float redSpeed = 0.45f;     //slide speed modifier
+    private float slidePower = 20.0f;   //slide speed modifier
+    private float rotateToTargetSpeed = 60.0f;
+
 
     LinkedList<char> mList = new LinkedList<char>();
     Dictionary<string, string> mHash = new Dictionary<string, string>();
@@ -40,7 +42,25 @@ public class PlayerMovement : Photon.MonoBehaviour              //added photon. 
     private Vector3 TargetPosition;
     private Quaternion TargetRotation;
 
+    #region Sequence bools
+    bool isBusyCasting;
+    bool hasSelection;
+    bool isEnemy;
+    bool hasEnoughMana;
+    bool lookingAtTarget;
+    bool armsGoingDown;
+    bool breakAnimation;
+    bool isInCastCircle;
+    bool cancelCast;
 
+    #endregion
+
+    #region Timers
+    float maxRotateTimer = 10f;
+    float armsMovingTimer = 2f;
+    float breakTimer = 2f;
+
+    #endregion
 
 
     private PhotonView PhotonView;    
@@ -72,20 +92,24 @@ public class PlayerMovement : Photon.MonoBehaviour              //added photon. 
         mHash.Add("zdx", "sslideright");
         mHash.Add("cax", "sslideleft");
         mHash.Add("cdx", "sslideleft");
-        mHash.Add("cwdW", "arcoutright");
+        mHash.Add("cwdW", "arcoutright");   //these aren't the same because of the forward step
         mHash.Add("cxdX", "arcoutright");
-        mHash.Add("cwaW", "arcbackright");
+        mHash.Add("cwaW", "arcbackright");  //these aren't the same because of the forward step
         mHash.Add("cxaX", "arcbackright");
-        mHash.Add("zwdW", "arcoutleft");
+        mHash.Add("zwdW", "arcoutleft");    //these aren't the same because of the forward step
         mHash.Add("zxdX", "arcoutleft");
-        mHash.Add("zwaW", "arcbackleft");
+        mHash.Add("zwaW", "arcbackleft");   //these aren't the same because of the forward step
         mHash.Add("zxaX", "arcbackleft");
-        mHash.Add("wd", "interruptright");  //this isn't exactly right
-        mHash.Add("wa", "interruptleft");   //this isn't exactly right
         mHash.Add("zawW", "extremeturnleft");
         mHash.Add("cdwW", "extremeturnright");
-        mHash.Add("zaw", "wideanglediagforwardleft");
-        mHash.Add("cdw", "wideanglediagforwardright");
+        mHash.Add("zaw", "wideanglediagforwardleft");   //straight slide when casting
+        mHash.Add("cdw", "wideanglediagforwardright");  //straight slide when casting
+        mHash.Add("zawd", "wsslideleftrotateright"); //these aren't the same because of the forward step
+        mHash.Add("zaxd", "backsslideleftrotateright");
+        mHash.Add("cdwa", "wssliderightrotateleft"); //these aren't the same because of the forward step
+        mHash.Add("cdxa", "backssliderightrotateleft");
+
+        //could add some more where a or d are tapping at the end of 3 (ex: zwxd - would add a little rotate on it)
 
     }
 
@@ -97,6 +121,8 @@ public class PlayerMovement : Photon.MonoBehaviour              //added photon. 
 
         // GameObject.Find("CastCollider").GetComponent<CastCollider>().okToCast    -  need to get access to the bool in the cast circle prefab
 
+        stateInt = 0;
+
     }
 
     // Update is called once per frame
@@ -104,10 +130,14 @@ public class PlayerMovement : Photon.MonoBehaviour              //added photon. 
     {
         if (PhotonView.isMine)
         {
-            CheckInput();
+            CheckInput();                   //this receives input and puts it in the list
+
+            ControlMethod(stateInt);        //changes the state of the movement restrictions (movement executed in here)
+
         }
         else
         {
+            //this is where other players' movements are updated.
             //16:49 in #7       smooth move -- not sure if i want
             SmoothMove();
         }
@@ -208,7 +238,7 @@ public class PlayerMovement : Photon.MonoBehaviour              //added photon. 
         if (Input.GetKeyDown(KeyCode.Z))
         {
             if (mList.Count > 2) mList.Remove('w');
-            if (mList.Count > 2) mList.Remove('x');     // revist, maybe remove
+            if (mList.Count > 2) mList.Remove('x');     // was causing backwards movement
             mList.Remove('z');
             mList.AddLast('z');
         }
@@ -263,7 +293,7 @@ public class PlayerMovement : Photon.MonoBehaviour              //added photon. 
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             if (mList.Count > 3) mList.Remove('W');
-            //if (mList.Count > 2) mList.Remove('X');     // revist, maybe remove
+            //if (mList.Count > 2) mList.Remove('X');     // was causing backwards movement
             mList.Remove('d');
             mList.AddLast('d');
         }
@@ -273,9 +303,7 @@ public class PlayerMovement : Photon.MonoBehaviour              //added photon. 
         }
         #endregion
 
-        ControlMethod(stateInt);                        // this has to do with defining the state of movement.
-                                                        // was going to use this to define what can be done when starting to cast
-
+        
     }
 
     
@@ -283,29 +311,39 @@ public class PlayerMovement : Photon.MonoBehaviour              //added photon. 
     {                                                   //I removed all the casting code from this script
         switch (currentState)
         {
-            case 0: //running
+            case 0: //unrestricted running
                     //all keys work normally
-                runningPls();
+                FreeRun();
+
                 break;
-            case 1: //castnormal
-                    // z, c, x are ignored in non-combo processing
-                    // w changes bool to take 1 step forward when called
-         //       castnormalPls();
+            case 1: //rotate movement for rotating to target
+                    // a, d rotate speed reduced by amount auto rotate is
+                    // w, z, c changes bool to take 1 step/animation when called
+                TargetRotationRun();
+
                 break;
-            case 2: //breakanimation
+            case 2: //slide movement during actual casting
                     // w, z, c, x are ignored in non-combo processing
-                    // new combinations change bool to break animation + 1 step forward
-         //       breakAnimationPls();
+                    // slides work only
+                SlideRun();
+
                 break;
-            case 3: //hiccup
-                    //all keys and combos ignored in processing
-         //       hiccupPls();
+            case 3: //movement after the cast break
+                    //no z, c, x (strafe and backward)
+                    // this only lasts for a moment
+                BreakRun();
+                    //always begins with a list reset or pause or something
+                break;
+            case 4: //no movement
+                    //all movement is suspended
+                NoMoveRun();
+
                 break;
         }
     }
 
 
-    void runningPls()
+    void FreeRun()
     {
         string m = "";
 
@@ -313,24 +351,14 @@ public class PlayerMovement : Photon.MonoBehaviour              //added photon. 
         {
             m = m + i.ToString();
         }
-
+        //displays contents of input list to console.
         //if (m != null)
         //{ Debug.Log(m); }
 
         string items = "";
-        if (mHash.TryGetValue(m, out items))                                            //the stored list or hash looks for these combos
+        if (mHash.TryGetValue(m, out items))            //the stored list or hash looks for these combos
         {
-            if (items == "interruptleft")
-            {
-                transform.position += transform.forward * incSpeed * Time.deltaTime;
-                transform.Rotate(Vector3.down * rotSpeed * Time.deltaTime);
-            }
-            else if (items == "interruptright")
-            {
-                transform.position += transform.forward * incSpeed * Time.deltaTime;
-                transform.Rotate(Vector3.up * rotSpeed * Time.deltaTime);
-            }
-            else if (items == "sslideright")
+            if (items == "sslideright")
             {
                 transform.position += -transform.forward * redSpeed * Time.deltaTime;
                 transform.position += -transform.right * slidePower * Time.deltaTime;
@@ -360,7 +388,6 @@ public class PlayerMovement : Photon.MonoBehaviour              //added photon. 
                 transform.position += transform.right * slidePower * Time.deltaTime;
                 transform.Rotate(Vector3.down * rotSpeed * Time.deltaTime);
             }
-            //new 12/26/17
             else if (items == "extremeturnleft")
             {
                 transform.position += -transform.right * slidePower / 2 * Time.deltaTime;
@@ -381,6 +408,18 @@ public class PlayerMovement : Photon.MonoBehaviour              //added photon. 
             {
                 transform.position += transform.forward * incSpeed * Time.deltaTime;
                 transform.position += (transform.right * 2) * incSpeed * redSpeed * Time.deltaTime;
+            }
+            else if (items == "backsslideleftrotateright")
+            {
+                transform.position += -transform.forward * redSpeed * Time.deltaTime;
+                transform.position += -transform.right * slidePower * Time.deltaTime;
+                transform.Rotate(Vector3.up * rotSpeed * Time.deltaTime);
+            }
+            else if (items == "backssliderightrotateleft")
+            {
+                transform.position += -transform.forward * redSpeed * Time.deltaTime;
+                transform.position += transform.right * slidePower * Time.deltaTime;
+                transform.Rotate(Vector3.down * rotSpeed * Time.deltaTime);
             }
 
             else if (items == "Idle") { mList.Clear(); }
@@ -421,7 +460,313 @@ public class PlayerMovement : Photon.MonoBehaviour              //added photon. 
             if (z == Move.dc) { move = move + 'c'; transform.position += transform.right * incSpeed * redSpeed * Time.deltaTime; }
         }
     }
-    
+
+    void TargetRotationRun()        //needs work on the one steps
+    {
+        string m = "";
+
+        foreach (char i in mList)
+        {
+            m = m + i.ToString();
+        }
+        //displays contents of input list to console.
+        //if (m != null)
+        //{ Debug.Log(m); }
+
+        string items = "";
+        if (mHash.TryGetValue(m, out items))            //the stored list or hash looks for these combos
+        {
+            //new 12/26/17
+            if (items == "extremeturnleft")
+            {
+                transform.position += -transform.right * slidePower / 2 * Time.deltaTime;
+                transform.Rotate(Vector3.down * ((rotSpeed * 2) - rotateToTargetSpeed) * Time.deltaTime);             //reduced rotate speed by auto turn speed
+            }
+            else if (items == "extremeturnright")
+            {
+                transform.position += transform.right * slidePower / 2 * Time.deltaTime;
+                transform.Rotate(Vector3.up * ((rotSpeed * 2) - rotateToTargetSpeed) * Time.deltaTime);             //reduced rotate speed by auto turn speed
+            }
+            else if (items == "Idle") { mList.Clear(); }
+            else if (items == "dump") { mList.Clear(); }
+        }
+        else
+        {
+            var w = Move.off;
+            var x = Move.off;
+            var a = Move.off;
+            var z = Move.off;
+            string move = "";
+
+            foreach (char i in m)
+            {
+                if (i == 'w')
+                {
+                    w = Move.wxaz;
+                    x = Move.off;
+                }
+                else if (i == 'W') w = Move.off;
+                else if (i == 'x')
+                {
+                    x = Move.wxaz;
+                    w = Move.off;
+                }
+                else if (i == 'X') x = Move.off;
+                else if (i == 'a') a = Move.wxaz;
+                else if (i == 'd') a = Move.dc;
+                else if (i == 'z') z = Move.wxaz;
+                else if (i == 'c') z = Move.dc;
+            }
+            if (w == Move.wxaz) {  }    //should take one step and animation only
+            if (x == Move.wxaz) {  }
+            if (a == Move.wxaz) { move = move + 'a'; transform.Rotate(Vector3.down * (rotSpeed - rotateToTargetSpeed) * Time.deltaTime); }  //reduced rotate speed by auto turn speed
+            if (a == Move.dc) { move = move + 'd'; transform.Rotate(Vector3.up * (rotSpeed - rotateToTargetSpeed) * Time.deltaTime); }  //reduced rotate speed by auto turn speed
+            if (z == Move.wxaz) { }     //should take one step and animation only
+            if (z == Move.dc) { }       //should take one step and animation only
+        }
+    }
+
+    void SlideRun()
+    {
+        string m = "";
+
+        foreach (char i in mList)
+        {
+            m = m + i.ToString();
+        }
+        //displays contents of input list to console.
+        //if (m != null)
+        //{ Debug.Log(m); }
+
+        string items = "";
+        if (mHash.TryGetValue(m, out items))            //the stored list or hash looks for these combos
+        {
+            if (items == "sslideright")
+            {
+                transform.position += -transform.forward * redSpeed * Time.deltaTime;
+                transform.position += -transform.right * slidePower * Time.deltaTime;
+            }
+            else if (items == "sslideleft")
+            {
+                transform.position += -transform.forward * redSpeed * Time.deltaTime;
+                transform.position += transform.right * slidePower * Time.deltaTime;
+            }
+            else if (items == "arcoutleft")
+            {
+                transform.position += -transform.right * slidePower * Time.deltaTime;
+                transform.Rotate(Vector3.up * rotSpeed * Time.deltaTime);
+            }
+            else if (items == "arcbackleft")
+            {
+                transform.position += -transform.right * slidePower * Time.deltaTime;
+                transform.Rotate(Vector3.down * rotSpeed * Time.deltaTime);
+            }
+            else if (items == "arcoutright")
+            {
+                transform.position += transform.right * slidePower * Time.deltaTime;
+                transform.Rotate(Vector3.up * rotSpeed * Time.deltaTime);
+            }
+            else if (items == "arcbackright")
+            {
+                transform.position += transform.right * slidePower * Time.deltaTime;
+                transform.Rotate(Vector3.down * rotSpeed * Time.deltaTime);
+            }
+            else if (items == "extremeturnleft")
+            {
+                transform.position += -transform.forward * redSpeed * Time.deltaTime;
+                transform.position += transform.right * slidePower * Time.deltaTime;
+            }
+            else if (items == "extremeturnright")
+            {
+                transform.position += -transform.forward * redSpeed * Time.deltaTime;
+                transform.position += -transform.right * slidePower * Time.deltaTime;
+            }
+
+            else if (items == "wideanglediagforwardleft")
+            {
+                transform.position += -transform.forward * redSpeed * Time.deltaTime;
+                transform.position += transform.right * slidePower * Time.deltaTime;
+            }
+            else if (items == "wideanglediagforwardright")
+            {
+                transform.position += -transform.forward * redSpeed * Time.deltaTime;
+                transform.position += -transform.right * slidePower * Time.deltaTime;
+            }
+            else if (items == "backsslideleftrotateright")
+            {
+                transform.position += -transform.forward * redSpeed * Time.deltaTime;
+                transform.position += -transform.right * slidePower * Time.deltaTime;
+                transform.Rotate(Vector3.up * rotSpeed * Time.deltaTime);
+            }
+            else if (items == "backssliderightrotateleft")
+            {
+                transform.position += -transform.forward * redSpeed * Time.deltaTime;
+                transform.position += transform.right * slidePower * Time.deltaTime;
+                transform.Rotate(Vector3.down * rotSpeed * Time.deltaTime);
+            }
+            else if (items == "wsslideleftrotateright")
+            {
+                transform.position += -transform.forward * redSpeed * Time.deltaTime;
+                transform.position += -transform.right * slidePower * Time.deltaTime;
+                transform.Rotate(Vector3.up * rotSpeed * Time.deltaTime);
+            }
+            else if (items == "wssliderightrotateleft")
+            {
+                transform.position += -transform.forward * redSpeed * Time.deltaTime;
+                transform.position += transform.right * slidePower * Time.deltaTime;
+                transform.Rotate(Vector3.down * rotSpeed * Time.deltaTime);
+            }
+
+            else if (items == "Idle") { mList.Clear(); }
+            else if (items == "dump") { mList.Clear(); }
+        }
+        else
+        {
+            var w = Move.off;
+            var x = Move.off;
+            var a = Move.off;
+            var z = Move.off;
+            string move = "";
+
+            foreach (char i in m)
+            {
+                if (i == 'w')
+                {
+                    w = Move.wxaz;
+                    x = Move.off;
+                }
+                else if (i == 'W') w = Move.off;
+                else if (i == 'x')
+                {
+                    x = Move.wxaz;
+                    w = Move.off;
+                }
+                else if (i == 'X') x = Move.off;
+                else if (i == 'a') a = Move.wxaz;
+                else if (i == 'd') a = Move.dc;
+                else if (i == 'z') z = Move.wxaz;
+                else if (i == 'c') z = Move.dc;
+            }
+            if (w == Move.wxaz) { }
+            if (x == Move.wxaz) {  }
+            if (a == Move.wxaz) { move = move + 'a'; transform.Rotate(Vector3.down * rotSpeed * Time.deltaTime); }
+            if (a == Move.dc) { move = move + 'd'; transform.Rotate(Vector3.up * rotSpeed * Time.deltaTime); }
+            if (z == Move.wxaz) {  }
+            if (z == Move.dc) {  }
+        }
+    }
+
+    void BreakRun()
+    {
+        string m = "";
+
+        foreach (char i in mList)
+        {
+            m = m + i.ToString();
+        }
+        //displays contents of input list to console.
+        //if (m != null)
+        //{ Debug.Log(m); }
+
+        string items = "";
+        if (mHash.TryGetValue(m, out items))            //the stored list or hash looks for these combos
+        {
+            if (items == "sslideright")
+            {
+                transform.position += -transform.forward * redSpeed * Time.deltaTime;
+                transform.position += -transform.right * slidePower * Time.deltaTime;
+            }
+            else if (items == "sslideleft")
+            {
+                transform.position += -transform.forward * redSpeed * Time.deltaTime;
+                transform.position += transform.right * slidePower * Time.deltaTime;
+            }
+            else if (items == "arcoutleft")
+            {
+                transform.position += -transform.right * slidePower * Time.deltaTime;
+                transform.Rotate(Vector3.up * rotSpeed * Time.deltaTime);
+            }
+            else if (items == "arcbackleft")
+            {
+                transform.position += -transform.right * slidePower * Time.deltaTime;
+                transform.Rotate(Vector3.down * rotSpeed * Time.deltaTime);
+            }
+            else if (items == "arcoutright")
+            {
+                transform.position += transform.right * slidePower * Time.deltaTime;
+                transform.Rotate(Vector3.up * rotSpeed * Time.deltaTime);
+            }
+            else if (items == "arcbackright")
+            {
+                transform.position += transform.right * slidePower * Time.deltaTime;
+                transform.Rotate(Vector3.down * rotSpeed * Time.deltaTime);
+            }
+            else if (items == "extremeturnleft")
+            {
+                transform.position += -transform.forward * redSpeed * Time.deltaTime;
+                transform.position += transform.right * slidePower * Time.deltaTime;
+            }
+            else if (items == "extremeturnright")
+            {
+                transform.position += -transform.forward * redSpeed * Time.deltaTime;
+                transform.position += -transform.right * slidePower * Time.deltaTime;
+            }
+
+            else if (items == "wideanglediagforwardleft")
+            {
+                transform.position += -transform.forward * redSpeed * Time.deltaTime;
+                transform.position += transform.right * slidePower * Time.deltaTime;
+            }
+            else if (items == "wideanglediagforwardright")
+            {
+                transform.position += -transform.forward * redSpeed * Time.deltaTime;
+                transform.position += -transform.right * slidePower * Time.deltaTime;
+            }
+
+            else if (items == "Idle") { mList.Clear(); }
+            else if (items == "dump") { mList.Clear(); }
+        }
+        else
+        {
+            var w = Move.off;
+            var x = Move.off;
+            var a = Move.off;
+            var z = Move.off;
+            string move = "";
+
+            foreach (char i in m)
+            {
+                if (i == 'w')
+                {
+                    w = Move.wxaz;
+                    x = Move.off;
+                }
+                else if (i == 'W') w = Move.off;
+                else if (i == 'x')
+                {
+                    x = Move.wxaz;
+                    w = Move.off;
+                }
+                else if (i == 'X') x = Move.off;
+                else if (i == 'a') a = Move.wxaz;
+                else if (i == 'd') a = Move.dc;
+                else if (i == 'z') z = Move.wxaz;
+                else if (i == 'c') z = Move.dc;
+            }
+            if (w == Move.wxaz) { move = move + 'w'; transform.position += transform.forward * incSpeed * Time.deltaTime; }
+            if (x == Move.wxaz) { }
+            if (a == Move.wxaz) { move = move + 'a'; transform.Rotate(Vector3.down * rotSpeed * Time.deltaTime); }
+            if (a == Move.dc) { move = move + 'd'; transform.Rotate(Vector3.up * rotSpeed * Time.deltaTime); }
+            if (z == Move.wxaz) { }
+            if (z == Move.dc) { }
+        }
+    }
+
+    void NoMoveRun()
+    {
+        mList.Clear();
+    }
+
     enum Move { off, wxaz, dc };
 
 }

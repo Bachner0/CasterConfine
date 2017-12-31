@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-//I also want name and health bar updated here above the rect transform
-//  -the name will be grabbed by the photon name for a text box
-//  -the health bar will update with a listener on when the target health changes
-//
+/// <summary>
+/// This is not working with multiplayer. The UI just sits there.
+/// </summary>
 
-public class UISelectionIndicator : MonoBehaviour {
+
+public class UISelectionIndicator : Photon.MonoBehaviour
+{
 
     MouseManager mm;
     float minPadding;
@@ -24,6 +25,7 @@ public class UISelectionIndicator : MonoBehaviour {
 
     private void Update()
     {
+
         if (mm.selectedObject != null)
         {
             for (int i = 0; i < this.transform.childCount; i++)

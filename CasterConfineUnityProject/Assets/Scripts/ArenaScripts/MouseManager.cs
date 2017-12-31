@@ -3,17 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // Make it so you can't select self
+//
+//I also want a UI box that has name and health bar updated
+//  -the name will be grabbed by the photon name for a text box
+//  -the health bar will update with a listener on when the target health changes
+//
 
 
 
-
-public class MouseManager : MonoBehaviour
+public class MouseManager : Photon.PunBehaviour
 {
 
     public LayerMask selectionMask; //for defining what layers to register selection on
     Camera playerCamera;
     public GameObject selectedObject;   //to store what was selected
-    public Renderer selectedObjectRenderer;
+    public Renderer selectedObjectRenderer; //stored object renderer
+    public PhotonView selectionPhotonView; //stored photonview
+    private PhotonView MyPhotonView;
+    private PhotonView tempSelectionPhotonView;
 
     // Use this for initialization
     void Start ()
@@ -21,7 +28,8 @@ public class MouseManager : MonoBehaviour
         playerCamera = Camera.main;
         selectedObject = null;
         selectedObjectRenderer = null;
-	}
+        MyPhotonView = GetComponent<PhotonView>();
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -43,8 +51,19 @@ public class MouseManager : MonoBehaviour
                 Debug.Log("We hit " + hit.collider.name + " " + hit.point);
 
                 GameObject hitObject = hit.transform.root.gameObject;
+                try
+                {
+                    PhotonView objPhotonView = hitObject.GetComponent<PhotonView>();
 
-                SelectThisObject(hitObject);
+                    if (!objPhotonView.isMine)
+                    {
+                        SelectThisObject(hitObject);
+                    }
+                }
+                catch
+                {
+                    Debug.Log("Selected the target drudge. He has no PhotonView because I don't know how to get it to work.");
+                }
             }
             else
             {
@@ -68,11 +87,11 @@ public class MouseManager : MonoBehaviour
         {
             if (obj == selectedObject)
                 return;
-
             ClearSelection();
         }
         selectedObject = obj;
-        selectedObjectRenderer = selectedObject.GetComponentInChildren<Renderer>();
+        selectedObjectRenderer = obj.GetComponentInChildren<Renderer>();
+
     }
 
     //If we wanted to deselect in some way. maybe use this when gameobject (player) is destroyed?

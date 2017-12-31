@@ -15,13 +15,14 @@ public class NewPlayerSettings : Photon.PunBehaviour
     private void Start()
     {
         CameraController _cameraController = this.gameObject.GetComponent<CameraController>();
-
+        Canvas _playerUIcanvas = this.gameObject.GetComponentInChildren<Canvas>();
 
         if (_cameraController != null)
         {
             if (photonView.isMine)
             {
-                  _cameraController.OnStartFollowing();
+                _cameraController.OnStartFollowing();
+                _playerUIcanvas.enabled = true;
             }
         }
         else

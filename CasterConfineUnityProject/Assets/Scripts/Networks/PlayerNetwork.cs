@@ -18,7 +18,7 @@ public class PlayerNetwork : MonoBehaviour {
     {
         Instance = this;
         PhotonView = GetComponent<PhotonView>();
-        //To identify people
+        //To identify people - hopefully we can make this the STEAM USERNAME
         PlayerName = "Caster #" + Random.Range(1000, 9999);
 
         // times per second
@@ -92,7 +92,7 @@ public class PlayerNetwork : MonoBehaviour {
         //calling a network destroy
         if (health <= 0)
         {
-            PhotonNetwork.Destroy(CurrentPlayer.gameObject);        //
+            PhotonNetwork.Destroy(CurrentPlayer.gameObject);        //add death animation, score, etc...
         }
         else
         {
@@ -125,6 +125,14 @@ public class PlayerNetwork : MonoBehaviour {
         GameObject obj = PhotonNetwork.Instantiate(Path.Combine("Prefabs", "NewPlayer"), Vector3.zero, Quaternion.identity, 0);
         CurrentPlayer = obj.GetComponent<PlayerMovement>();
         //OnStartFollowing();  //this is for the camera
+
+
+
+
+
+
+
     }
+
 
 }

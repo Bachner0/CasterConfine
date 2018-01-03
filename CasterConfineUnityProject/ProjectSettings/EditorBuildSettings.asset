@@ -13,4 +13,7 @@ EditorBuildSettings:
     guid: e5f7a551da23bd84d809167636615b00
   - enabled: 1
     path: Assets/Scenes/MultiplayerMainLobby.unity
-    guid: 00000000000000000000000000000000
+    guid: 3f34107cdfdd14746aa7368fb3692b04
+  - enabled: 1
+    path: Assets/Scenes/CustomizeCharacter.unity
+    guid: b59eca06727503045b244dae1e6bfd25

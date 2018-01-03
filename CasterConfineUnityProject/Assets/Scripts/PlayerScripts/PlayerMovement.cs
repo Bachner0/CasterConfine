@@ -15,7 +15,6 @@ public class PlayerMovement : Photon.MonoBehaviour              //added photon. 
     Camera playerCam;
     */
 
-    public float Health;
 
     
     private float incSpeed = 12.0f;

@@ -13,7 +13,7 @@ public class SpellCoolDown : MonoBehaviour {
     private GameObject weaponHolder;       
 
     private Image myButtonImage;
-    private AudioSource spellSource;
+    private AudioSource spellSoundSource;
     private float coolDownDuration;
     private float nextReadyTime;
     private float coolDownTimeLeft;
@@ -28,7 +28,7 @@ public class SpellCoolDown : MonoBehaviour {
     {
         spell = selectedSpell;
         myButtonImage = GetComponent<Image>();
-        spellSource = GetComponent<AudioSource>();
+        spellSoundSource = GetComponent<AudioSource>();
         myButtonImage.sprite = spell.spellIcon;
         darkMask.sprite = spell.spellIcon;
         coolDownDuration = spell.spellCoolDown;
@@ -78,8 +78,8 @@ public class SpellCoolDown : MonoBehaviour {
         darkMask.enabled = true;
         //coolDownTextDisplay.enabled = true;
 
-        spellSource.clip = spell.spellSuccessSound;
-        spellSource.Play();
+        spellSoundSource.clip = spell.spellSuccessSound;
+        spellSoundSource.Play();
         spell.TriggerAbility();
     }
 }

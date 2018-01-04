@@ -90,8 +90,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\CanvasObject.cs" />
-    <Compile Include="Assets\DoubleClickTest.cs" />
     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\CustomTypes.cs" />
     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\Enums.cs" />
     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\Extensions.cs" />
@@ -164,10 +162,12 @@
     <Compile Include="Assets\PhotonChatApi\IChatClientListener.cs" />
     <Compile Include="Assets\Scripts\ArenaScripts\MouseManager.cs" />
     <Compile Include="Assets\Scripts\ArenaScripts\UISelectionIndicator.cs" />
+    <Compile Include="Assets\Scripts\CanvasObject.cs" />
     <Compile Include="Assets\Scripts\CurrentRoom\CurrentRoomCanvas.cs" />
     <Compile Include="Assets\Scripts\CurrentRoom\InRoomMapSettings.cs" />
     <Compile Include="Assets\Scripts\CurrentRoom\PlayerLayoutGroup.cs" />
     <Compile Include="Assets\Scripts\CurrentRoom\PlayerListing.cs" />
+    <Compile Include="Assets\Scripts\DoubleClickTest.cs" />
     <Compile Include="Assets\Scripts\Generic\DDOL.cs" />
     <Compile Include="Assets\Scripts\Lobby\CreateRoom.cs" />
     <Compile Include="Assets\Scripts\Lobby\LobbyCanvas.cs" />
@@ -183,6 +183,7 @@
     <Compile Include="Assets\Scripts\PlayerScripts\NewPlayerSettings.cs" />
     <Compile Include="Assets\Scripts\PlayerScripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\PlayerScripts\PlayerMovementBackup.cs" />
+    <Compile Include="Assets\Scripts\Spells\LoadSpellBar.cs" />
     <Compile Include="Assets\Scripts\Spells\ProjectileSpell.cs" />
     <Compile Include="Assets\Scripts\Spells\Spell.cs" />
     <Compile Include="Assets\Scripts\Spells\SpellBar.cs" />

@@ -14,12 +14,12 @@ public class NewPlayerSettings : Photon.PunBehaviour
     }
 
 
-        /// <summary>
-        /// First, it gets the CameraWork component, we expect this, so if we don't find it, we log an error. 
-        /// Then, if photonView.isMine is true, it means we need to follow this instance, and so we call _cameraWork.OnStartFollowing()
-        /// which effectivly makes the camera follow that very instance in the scene.
-        /// </summary>
-        private void Start()
+    /// <summary>
+    /// First, it gets the CameraWork component, we expect this, so if we don't find it, we log an error. 
+    /// Then, if photonView.isMine is true, it means we need to follow this instance, and so we call _cameraWork.OnStartFollowing()
+    /// which effectivly makes the camera follow that very instance in the scene.
+    /// </summary>
+    private void Start()
     {
         CameraController _cameraController = this.gameObject.GetComponent<CameraController>();
         Canvas _playerUIcanvas = this.gameObject.GetComponentInChildren<Canvas>();
@@ -38,13 +38,13 @@ public class NewPlayerSettings : Photon.PunBehaviour
             Debug.LogError("<Color=Red><a>Missing</a></Color> CameraWork Component on playerPrefab.", this);
         }
 
-        LoadSpellBar();
     }
 
     // Update is called once per frame
-    void Update () {
-		
-	}
+    void Update()
+    {
+
+    }
 
 
     // https://www.youtube.com/watch?v=4VxoE-dsziM
@@ -54,20 +54,5 @@ public class NewPlayerSettings : Photon.PunBehaviour
     public GameObject spellBar;
     public GameObject spellInstantiationLocation;   //this is for locating all the spell triggerables. put all the spell triggerables on this
                                                     //attached gameobject
-
-    //change to pass in the custom spell bar
-    public void LoadSpellBar()
-    {
-        spellBar.SetActive(true);
-
-        //i want the canvas to generate a button for each spell on the selectedSpellsLoadout array. maybe it should be a spell list?
-
-
-        SpellCoolDown[] coolDownButtons = GetComponentsInChildren<SpellCoolDown>(); //searching the canvas for any skill bar buttons
-        for (int i = 0; i < coolDownButtons.Length; i++)
-        {
-            coolDownButtons[i].Initialize(selectedSpellsLoadout[i], spellInstantiationLocation);    //don't understand why the buttons need to be initialized but following tutorial
-        }
-    }
 
 }

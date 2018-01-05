@@ -11,17 +11,27 @@ using UnityEngine;
 
 public class SpellShootTriggerable : MonoBehaviour
 {
+    private PhotonView photonView;
 
     [HideInInspector] public Rigidbody projectile;         // Rigidbody variable to hold a reference to our projectile prefab
     public Transform spellSpawn;                           // Transform variable to hold the location where we will spawn our projectile
     [HideInInspector] public float projectileForce = 250f; // Float variable to hold the amount of force which we will apply to launch our projectiles
 
+    void Awake()
+    {
+        photonView = GetComponentInParent<PhotonView>();
+    }
+
+
     public void Launch()
     {
-        //Instantiate a copy of our projectile and store it in a new rigidbody variable called clonedBullet
-        Rigidbody clonedBullet = Instantiate(projectile, spellSpawn.position, transform.rotation) as Rigidbody;
+        if (photonView.isMine)
+        {
+            //Instantiate a copy of our projectile and store it in a new rigidbody variable called clonedBullet
+            Rigidbody clonedBullet = Instantiate(projectile, spellSpawn.position, transform.rotation) as Rigidbody;
 
-        //Add force to the instantiated bullet, pushing it forward away from the bulletSpawn location, using projectile force for how hard to push it away
-        clonedBullet.AddForce(spellSpawn.transform.forward * projectileForce);
+            //Add force to the instantiated bullet, pushing it forward away from the bulletSpawn location, using projectile force for how hard to push it away
+            clonedBullet.AddForce(spellSpawn.transform.forward * projectileForce);
+        }
     }
 }

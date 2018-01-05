@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//scriptable object
+//
 //https://www.youtube.com/watch?v=GoeW_ZBvfqM
 //https://unity3d.com/learn/tutorials/topics/scripting/ability-system-scriptable-objects
 

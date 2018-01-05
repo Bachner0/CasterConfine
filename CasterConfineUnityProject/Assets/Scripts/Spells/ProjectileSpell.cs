@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//inherits the scriptable object
 
 [CreateAssetMenu(menuName = "Spells/ProjectileSpell")]
 public class ProjectileSpell : Spell

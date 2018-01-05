@@ -183,7 +183,6 @@
     <Compile Include="Assets\Scripts\PlayerScripts\NewPlayerSettings.cs" />
     <Compile Include="Assets\Scripts\PlayerScripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\PlayerScripts\PlayerMovementBackup.cs" />
-    <Compile Include="Assets\Scripts\Spells\LoadSpellBar.cs" />
     <Compile Include="Assets\Scripts\Spells\ProjectileSpell.cs" />
     <Compile Include="Assets\Scripts\Spells\Spell.cs" />
     <Compile Include="Assets\Scripts\Spells\SpellBar.cs" />

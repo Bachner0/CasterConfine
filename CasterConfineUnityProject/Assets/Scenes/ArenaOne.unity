@@ -144,10 +144,10 @@ RectTransform:
   m_Father: {fileID: 359882390}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 1087.9199, y: -51.586334}
+  m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!82 &225425461
 AudioSource:
@@ -756,10 +756,10 @@ RectTransform:
   m_Father: {fileID: 359882390}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 1041.9199, y: -51.586334}
+  m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!82 &1131465819
 AudioSource:
@@ -914,7 +914,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1288290046}
   - component: {fileID: 1288290045}
-  - component: {fileID: 1288290047}
   m_Layer: 0
   m_Name: SpellManager
   m_TagString: Untagged
@@ -948,21 +947,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1288290047
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1288290044}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afa5c44c625e9aa418cfe4c36f122e89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selectedSpellsLoadout:
-  - {fileID: 11400000, guid: a0eeb4b0a64a9ba40a46d65432aa3de0, type: 2}
-  spellBar: {fileID: 359882389}
-  spellInstantiationLocation: {fileID: 0}
 --- !u!1 &1477958991
 GameObject:
   m_ObjectHideFlags: 0
@@ -1074,7 +1058,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1641768627
 MonoBehaviour:
   m_ObjectHideFlags: 0

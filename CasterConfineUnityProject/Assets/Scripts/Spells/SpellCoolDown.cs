@@ -3,7 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//attached to each spellbar spell slot
+
+
 public class SpellCoolDown : MonoBehaviour {
+
+    private PhotonView photonView;
 
     public KeyCode activateKey;             //the key that triggers this button, also see below in update
     public Image darkMask;
@@ -18,6 +23,10 @@ public class SpellCoolDown : MonoBehaviour {
     private float nextReadyTime;
     private float coolDownTimeLeft;
 
+    void Awake()
+    {
+        photonView = GetComponentInParent<PhotonView>();
+    }
 
     void Start()
     {
@@ -39,21 +48,24 @@ public class SpellCoolDown : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        bool coolDownComplete = (Time.time > nextReadyTime);
-        if (coolDownComplete)
+        if (photonView.isMine)
         {
-            SpellReady();
-            if (Input.GetKeyDown(activateKey))                   //this is where the spell is first pressed
-                                                                    // add an 'OR' statement that checks to see if double clicked or selected and the end key is pressed.
-                                                                    //i'll need to integrate all my spell sequence and checks
-                                                                    //before it actually gets triggered
+            bool coolDownComplete = (Time.time > nextReadyTime);
+            if (coolDownComplete)
             {
-                ButtonTriggered();
+                SpellReady();
+                if (Input.GetKeyDown(activateKey))                   //this is where the spell is first pressed
+                                                                     // add an 'OR' statement that checks to see if double clicked or selected and the end key is pressed.
+                                                                     //i'll need to integrate all my spell sequence and checks
+                                                                     //before it actually gets triggered
+                {
+                    ButtonTriggered();
+                }
             }
-        }
-        else
-        {
-            CoolDown();
+            else
+            {
+                CoolDown();
+            }
         }
     }
 
@@ -77,7 +89,6 @@ public class SpellCoolDown : MonoBehaviour {
         coolDownTimeLeft = coolDownDuration;
         darkMask.enabled = true;
         //coolDownTextDisplay.enabled = true;
-
         spellSoundSource.clip = spell.spellSuccessSound;
         spellSoundSource.Play();
         spell.TriggerAbility();
